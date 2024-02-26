@@ -1,11 +1,11 @@
 -- a. Informations d’un film (id_film) : titre, année, durée (au format HH:MM) et 
 -- réalisateur
 
-SELECT film_titre, film_duree, personne_prenom, personne_nom
+SELECT film_titre, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') AS duration, personne_prenom, personne_nom
 FROM film
 INNER JOIN realisateur ON realisateur.id_realisateur = film.id_realisateur
 INNER JOIN personne ON personne.id_personne = realisateur.id_personne
-WHERE id_film = 1
+WHERE id_film = 2;
 
 
 -- b. Liste des films dont la durée excède 2h15 classés par durée (du + long au + court)
@@ -84,3 +84,31 @@ INNER JOIN realisateur ON personne.id_personne = realisateur.id_personne
 INNER JOIN acteur ON personne.id_personne = acteur.id_personne
 
 -- i. Liste des films qui ont moins de 5 ans (classés du plus récent au plus ancien)
+
+SELECT film_titre
+FROM film
+WHERE (DATEDIFF(NOW(),film_date_sortie)) < (5*365)
+
+-- j. Nombre d’hommes et de femmes parmi les acteurs
+
+SELECT personne_sexe, COUNT(id_acteur)
+FROM acteur
+INNER JOIN personne ON acteur.id_personne = personne.id_personne
+GROUP BY personne_sexe
+
+
+-- k. Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)
+
+SELECT id_acteur, personne_nom, personne_date_naissance
+FROM acteur
+INNER JOIN personne ON acteur.id_personne = personne.id_personne
+WHERE DATEDIFF(NOW(), personne_date_naissance) < ((365*50) - 1)
+
+-- l. Acteurs ayant joué dans 3 films ou plus
+
+SELECT COUNT(casting_film.id_acteur) AS nbFilms, personne_nom 
+FROM casting_film
+INNER JOIN acteur ON casting_film.id_acteur = acteur.id_acteur
+INNER JOIN personne ON acteur.id_personne = personne.id_personne
+GROUP BY personne_nom
+HAVING nbFilms >= 3
