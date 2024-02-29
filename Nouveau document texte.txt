@@ -1,0 +1,79 @@
+INSERT INTO film (film_titre, film_duree, film_synopsis, film_date_sortie, film_note, film_affiche, id_realisateur)
+VALUES (
+"Blade 1",
+ 120,
+ "Blade Eric n'est ni un homme ni un vampire, mais un hybride du Bien et du Mal, et ce depuis le jour de sa naissance, où sa mère fut mordue et y laissa la vie. Immortel, Blade a conservé la force des vampires, tout en éliminant leurs faiblesses. Avec l'aide de son ami Abraham Whistler, il tente, depuis longtemps déjà, de mettre la main sur celui qui a causé la perte de sa mère.",
+ "1998-11-18",
+ 3,
+ "lien affiche blade",
+ 1
+  )
+
+
+CREATE TABLE genre(
+   id_genre INT AUTO_INCREMENT,
+   genre_libelle VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_genre)
+);
+
+CREATE TABLE role(
+   id_role INT AUTO_INCREMENT,
+   role_nom VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_role)
+);
+
+CREATE TABLE personne(
+   id_personne INT AUTO_INCREMENT,
+   personne_nom VARCHAR(50) NOT NULL,
+   personne_prenom VARCHAR(50) NOT NULL,
+   personne_sexe VARCHAR(50),
+   personne_date_naissance DATE,
+   PRIMARY KEY(id_personne)
+);
+
+CREATE TABLE acteur(
+   id_acteur INT AUTO_INCREMENT,
+   id_personne INT NOT NULL,
+   PRIMARY KEY(id_acteur),
+   UNIQUE(id_personne),
+   FOREIGN KEY(id_personne) REFERENCES personne(id_personne)
+);
+
+CREATE TABLE realisateur(
+   id_realisateur INT AUTO_INCREMENT,
+   id_personne INT NOT NULL,
+   PRIMARY KEY(id_realisateur),
+   UNIQUE(id_personne),
+   FOREIGN KEY(id_personne) REFERENCES personne(id_personne)
+);
+
+CREATE TABLE film(
+   id_film INT AUTO_INCREMENT,
+   film_titre VARCHAR(50) NOT NULL,
+   film_duree INT,
+   film_synopsis TEXT,
+   film_date_sortie DATE,
+   film_note VARCHAR(50),
+   film_affiche VARCHAR(255),
+   id_realisateur INT NOT NULL,
+   PRIMARY KEY(id_film),
+   FOREIGN KEY(id_realisateur) REFERENCES realisateur(id_realisateur)
+);
+
+CREATE TABLE genre_film(
+   id_film INT,
+   id_genre INT,
+   PRIMARY KEY(id_film, id_genre),
+   FOREIGN KEY(id_film) REFERENCES film(id_film),
+   FOREIGN KEY(id_genre) REFERENCES genre(id_genre)
+);
+
+CREATE TABLE casting_film(
+   id_film INT,
+   id_role INT,
+   id_acteur INT,
+   PRIMARY KEY(id_film, id_role, id_acteur),
+   FOREIGN KEY(id_film) REFERENCES film(id_film),
+   FOREIGN KEY(id_role) REFERENCES role(id_role),
+   FOREIGN KEY(id_acteur) REFERENCES acteur(id_acteur)
+);
