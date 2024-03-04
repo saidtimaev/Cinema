@@ -21,7 +21,8 @@
                 
             </header>
             <main>
-            <?= $content ?>
+                <h2><?= $titreSecond ?></h2>
+                <?= $content ?>
             </main>
     </body>
 </html>

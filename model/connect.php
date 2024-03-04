@@ -1,15 +1,21 @@
 <?php
 
-try {
-    $mysqlClient = new PDO(
-        sprintf('mysql:host=%s;dbname=%s;port=%s;charset=utf8', MYSQL_HOST, MYSQL_NAME, MYSQL_PORT),
-        MYSQL_USER,
-        MYSQL_PASSWORD
-    );
-    $mysqlClient->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+namespace Model;
 
-} catch (Exception $exception) {
+abstract class Connect {
 
-    die('Erreur : ' . $exception->getMessage());
-    
+    const HOST = 'localhost';
+    const NAME = 'cinemasaidtimaev';
+    const USER = 'root';
+    const PASSWORD = '';
+
+    public static function seConnecter(){
+        try {
+                return new \PDO(
+                    "mysql:host=".self::HOST.";dbname=".self::NAME.";charset=utf8", self::USER, self::PASSWORD);
+                } catch (\PDOException $ex){
+                    return $ex->getMessage();
+            }
+                                }
 }
+

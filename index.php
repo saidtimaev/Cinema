@@ -1,11 +1,22 @@
-// Routeur
+
 
 <?php
 
-require_once('controllers/');
-require_once('controllers/');
+use Controller\CinemaController;
 
-if (isset($_GET['action']) && $_GET['action'] !== '') {
-	
-	
+spl_autoload_register(function ($class_name){
+    include $class_name . '.php';
+});
+
+$ctrlCinema = new CinemaController();
+
+if(isset($_GET["action"])){
+    switch ($_GET["action"]){
+        case "listFilms" : $ctrlCinema->listFilms(); break;
+        case "listActeurs" : $ctrlCinema->listActeurs(); break;
+        case "listRealisateurs" : $ctrlCinema->listActeurs(); break;
+        case "listGenres" : $ctrlCinema->listActeurs(); break;
+        case "listRoles" : $ctrlCinema->listActeurs(); break;
+
+    }
 }
