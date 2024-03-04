@@ -29,6 +29,8 @@
 $pageActive = '<li class="nav-item mx-4"><a class="nav-link " href="listeFilms.php">Liste Films</a></li>
                <li class="nav-item mx-4"><a class="nav-link active" aria-current="page" href="listeActeurs.php">Liste Acteurs</a></li>
                <li class="nav-item mx-4"><a class="nav-link" href="listeRealisateurs.php">Liste Realisateurs</a></li>
+               <li class="nav-item mx-4"><a class="nav-link" href="listeGenres.php">Liste Genres</a></li>
+
                ';
 $titrePage = "Liste d'acteurs";
 $titreSecond = "Liste d'acteurs";

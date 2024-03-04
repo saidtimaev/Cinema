@@ -42,4 +42,16 @@ class CinemaController{
 
         require "view/listeRealisateurs.php";
     }
+
+    // Lister les réalisateurs 
+    public function listeGenres(){
+
+        $pdo = Connect::seConnecter();
+        $requete = $pdo->query("
+            SELECT genre_libelle
+            FROM genre
+        ");
+
+        require "view/listeGenres.php";
+    }
 }
