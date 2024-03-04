@@ -14,7 +14,7 @@ if(isset($_GET["action"])){
     switch ($_GET["action"]){
         case "listeFilms" : $ctrlCinema->listeFilms(); break;
         case "listeActeurs" : $ctrlCinema->listeActeurs(); break;
-        case "listeRealisateurs" : $ctrlCinema->listeActeurs(); break;
+        case "listeRealisateurs" : $ctrlCinema->listeRealisateurs(); break;
         case "listeGenres" : $ctrlCinema->listeActeurs(); break;
         case "listeRoles" : $ctrlCinema->listeActeurs(); break;
 

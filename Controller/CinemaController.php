@@ -29,4 +29,17 @@ class CinemaController{
 
         require "view/listeActeurs.php";
     }
+
+    // Lister les réalisateurs 
+    public function listeRealisateurs(){
+
+        $pdo = Connect::seConnecter();
+        $requete = $pdo->query("
+            SELECT personne_nom, personne_prenom, personne_date_naissance,personne_sexe
+            FROM realisateur
+            INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+        ");
+
+        require "view/listeRealisateurs.php";
+    }
 }

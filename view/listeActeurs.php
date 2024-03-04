@@ -26,10 +26,11 @@
 
 <?php
 
-$pageActive = '<li class="nav-item mx-4"><a class="nav-link " href="listFilms.php">Liste Films</a></li>
-            <li class="nav-item mx-4"><a class="nav-link active" aria-current="page" href="listActeurs.php">Liste Acteurs</a></li>
+$pageActive = '<li class="nav-item mx-4"><a class="nav-link " href="listeFilms.php">Liste Films</a></li>
+               <li class="nav-item mx-4"><a class="nav-link active" aria-current="page" href="listeActeurs.php">Liste Acteurs</a></li>
+               <li class="nav-item mx-4"><a class="nav-link" href="listeRealisateurs.php">Liste Realisateurs</a></li>
                ';
-$titrePage = "Liste des films";
-$titreSecond = "Liste des films";
+$titrePage = "Liste d'acteurs";
+$titreSecond = "Liste d'acteurs";
 $content = ob_get_clean();
 require "view/template.php";

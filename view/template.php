@@ -9,7 +9,6 @@
         <title><?= $titrePage ?></title>
     </head>
     <body >
-        
             <header >
                 <div class="container containerNav">
                     <nav class="navbar justify-content-center">
@@ -17,8 +16,7 @@
                                 <?= $pageActive ?>
                         </ul>
                     </nav>
-                </div>
-                
+                </div>    
             </header>
             <main>
                 <h2><?= $titreSecond ?></h2>
