@@ -26,12 +26,7 @@
 
 <?php
 
-$pageActive = '<li class="nav-item mx-4"><a class="nav-link active" aria-current="page" href="listeFilms.php">Liste Films</a></li>
-                <li class="nav-item mx-4"><a class="nav-link " href="listeActeurs.php">Liste Acteurs</a></li>
-                <li class="nav-item mx-4"><a class="nav-link" href="listeRealisateurs.php">Liste Realisateurs</a></li>
-                <li class="nav-item mx-4"><a class="nav-link " href="listeGenres.php">Liste Genres</a></li>
 
-               ';
 $titrePage = "Liste des films";
 $titreSecond = "Liste des films";
 $content = ob_get_clean();

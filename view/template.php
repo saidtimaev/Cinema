@@ -10,13 +10,16 @@
     </head>
     <body >
             <header >
-                <div class="container containerNav">
-                    <nav class="navbar justify-content-center">
-                        <ul class="navbar-nav d-flex flex-row">
-                                <?= $pageActive ?>
-                        </ul>
-                    </nav>
-                </div>    
+                <nav>
+                    <ul>
+                        <li class="nav-item mx-4"><a class="nav-link " href="index.php?action=listeFilms">Liste Films</a></li>
+                        <li class="nav-item mx-4"><a class="nav-link " href="index.php?action=listeActeurs">Liste Acteurs</a></li>
+                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeRealisateurs">Liste Realisateurs</a></li>
+                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeGenres">Liste Genres</a></li>
+                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeRoles">Liste Roles</a></li>
+                    </ul>
+                </nav>
+               
             </header>
             <main>
                 <h2><?= $titreSecond ?></h2>
