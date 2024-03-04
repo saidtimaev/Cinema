@@ -15,7 +15,7 @@
         <?php 
             foreach($requete->fetchAll() as $film){ ?>
                 <tr>
-                    <td><?= $film["film_titre"] ?></td>
+                    <td><a href="CinemaController.php?id=<?= $film["id_film"] ?>"><?php echo $film["film_titre"] ?></a></td>
                     <td><?= $film["film_date_sortie"] ?></td>
                     <td><?= $film["film_duree"] ?></td>
                     <td><?= $film["film_note"] ?></td>

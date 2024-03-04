@@ -10,7 +10,7 @@ class CinemaController{
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT film_titre, film_date_sortie, film_duree, film_note
+            SELECT id_film, film_titre, film_date_sortie, film_duree, film_note
             FROM film
         ");
 
