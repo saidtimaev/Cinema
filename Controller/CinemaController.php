@@ -8,7 +8,9 @@ class CinemaController{
     // Lister les films 
     public function listeFilms(){
 
+        // On appelle la méthode statique seConnecter de la classe Connect qui instancie un objet PDO stocké dans $pdo
         $pdo = Connect::seConnecter();
+        // On appelle la méthode query() sur de l'objet de la classe PDO
         $requete = $pdo->query("
             SELECT id_film, film_titre, film_date_sortie, film_duree, film_note
             FROM film

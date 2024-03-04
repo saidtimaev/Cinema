@@ -1,5 +1,7 @@
 <?php ob_start(); ?>
-<?php $film = $requeteInfosFilm->fetch();  ?>
+
+<?php $film = $requeteInfosFilm->fetch();  
+?>
 
 <h1><?php echo $film["film_titre"]."<br>"; ?> </h1>
 <p>Date de Sortie : <?php echo $film["film_date_sortie"]; ?></p>
