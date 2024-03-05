@@ -50,7 +50,7 @@ class CinemaController{
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT genre_libelle
+            SELECT genre_libelle, id_genre
             FROM genre
         ");
 
@@ -130,7 +130,7 @@ class CinemaController{
         require "view/infos/infosActeur.php";
     }
 
-    // Afficher infos d'un acteur
+    // Afficher infos d'un réalisateur
     public function infosRealisateur($id){
 
         $pdo = Connect::seConnecter();
@@ -154,5 +154,31 @@ class CinemaController{
         $requeteRealisateurFilms->execute(["id"=>$id]);
 
         require "view/infos/infosRealisateur.php";
+    }
+
+    // Afficher infos d'un genre
+    public function infosGenre($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteInfosGenre = $pdo->prepare("
+        SELECT genre_libelle
+        from genre
+        WHERE id_genre = :id
+        ");
+
+        $requeteInfosGenre->execute(["id"=>$id]);
+
+        
+        $requeteFilmsGenre = $pdo->prepare("
+            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie
+            FROM genre_film
+            INNER JOIN film on film.id_film = genre_film.id_film
+            WHERE genre_film.id_genre = :id
+        ");
+
+        $requeteFilmsGenre->execute(["id"=>$id]);
+
+        require "view/infos/infosGenre.php";
     }
 }
