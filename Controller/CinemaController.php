@@ -123,6 +123,7 @@ class CinemaController{
             INNER JOIN acteur ON casting_film.id_acteur = acteur.id_acteur
             INNER JOIN personne ON acteur.id_personne = personne.id_personne
             WHERE casting_film.id_acteur = :id
+            ORDER BY film_date_sortie DESC
         ");
 
         $requeteActeurCastings->execute(["id"=>$id]);
@@ -149,6 +150,7 @@ class CinemaController{
             SELECT film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie
             FROM film
             WHERE film.id_realisateur = :id
+            ORDER BY film_date_sortie DESC
         ");
 
         $requeteRealisateurFilms->execute(["id"=>$id]);
@@ -175,6 +177,7 @@ class CinemaController{
             FROM genre_film
             INNER JOIN film on film.id_film = genre_film.id_film
             WHERE genre_film.id_genre = :id
+            ORDER BY film_date_sortie DESC
         ");
 
         $requeteFilmsGenre->execute(["id"=>$id]);
@@ -203,6 +206,7 @@ class CinemaController{
         INNER JOIN personne ON acteur.id_personne = personne.id_personne
         INNER JOIN film ON film.id_film = casting_film.id_film
         WHERE id_role = :id
+        ORDER BY film_date_sortie DESC
         ");
 
         $requeteActeursRole->execute(["id"=>$id]);
