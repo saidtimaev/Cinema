@@ -214,5 +214,13 @@ class CinemaController{
         require "view/infos/infosRole.php";
     }
 
+    // Ajouter un genre
+    public function ajoutGenre(){
+
+        
+
+        require "view/ajouts/ajoutGenre.php";
+    }
+
     
 }
