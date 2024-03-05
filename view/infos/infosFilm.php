@@ -16,6 +16,8 @@
 
 <p>Liste des rôles et des acteurs :</p>
 
+<p>Il y a <?= $requeteActeursRoles->rowCount() ?> acteurs</p>
+
 <table>
     <thead>
         <tr>

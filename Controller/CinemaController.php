@@ -12,7 +12,7 @@ class CinemaController{
         $pdo = Connect::seConnecter();
         // On appelle la méthode query() sur de l'objet de la classe PDO
         $requete = $pdo->query("
-            SELECT id_film, film_titre, film_date_sortie, film_duree, film_note
+            SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note
             FROM film
         ");
 
@@ -24,7 +24,7 @@ class CinemaController{
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT personne_nom, personne_prenom, personne_date_naissance,personne_sexe
+            SELECT id_acteur,personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
             FROM acteur
             INNER JOIN personne ON acteur.id_personne = personne.id_personne
         ");
@@ -37,7 +37,7 @@ class CinemaController{
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT personne_nom, personne_prenom, personne_date_naissance,personne_sexe
+            SELECT personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
             FROM realisateur
             INNER JOIN personne ON realisateur.id_personne = personne.id_personne
         ");
@@ -75,7 +75,7 @@ class CinemaController{
         $pdo = Connect::seConnecter();
 
         $requeteInfosFilm = $pdo->prepare("
-            SELECT film_titre, film_date_sortie, film_duree, film_note, film_synopsis, personne_nom, personne_prenom
+            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, film_duree, film_note, film_synopsis, personne_nom, personne_prenom
             FROM film 
             INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
             INNER JOIN personne ON personne.id_personne = realisateur.id_personne
@@ -98,5 +98,35 @@ class CinemaController{
         $requeteActeursRoles->execute(["id"=>$id]);
 
         require "view/infos/infosFilm.php";
+    }
+
+    // Afficher infos d'un acteur
+    public function infosActeur($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteInfosActeur = $pdo->prepare("
+        SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance
+        FROM personne
+        INNER JOIN acteur ON acteur.id_personne = personne.id_personne
+        WHERE acteur.id_acteur = :id
+        ");
+
+        $requeteInfosActeur->execute(["id"=>$id]);
+
+        
+        $requeteActeurCastings = $pdo->prepare("
+            SELECT personne_prenom, personne_nom, role_nom, film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie
+            FROM casting_film
+            INNER JOIN film ON casting_film.id_film = film.id_film
+            INNER JOIN role ON casting_film.id_role = role.id_role
+            INNER JOIN acteur ON casting_film.id_acteur = acteur.id_acteur
+            INNER JOIN personne ON acteur.id_personne = personne.id_personne
+            WHERE casting_film.id_acteur = :id
+        ");
+
+        $requeteActeurCastings->execute(["id"=>$id]);
+
+        require "view/infos/infosActeur.php";
     }
 }
