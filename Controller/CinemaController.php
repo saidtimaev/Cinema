@@ -37,7 +37,7 @@ class CinemaController{
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
+            SELECT id_realisateur, personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
             FROM realisateur
             INNER JOIN personne ON realisateur.id_personne = personne.id_personne
         ");
@@ -106,7 +106,7 @@ class CinemaController{
         $pdo = Connect::seConnecter();
 
         $requeteInfosActeur = $pdo->prepare("
-        SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance
+        SELECT personne_prenom, personne_nom, personne_sexe, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance
         FROM personne
         INNER JOIN acteur ON acteur.id_personne = personne.id_personne
         WHERE acteur.id_acteur = :id
@@ -128,5 +128,31 @@ class CinemaController{
         $requeteActeurCastings->execute(["id"=>$id]);
 
         require "view/infos/infosActeur.php";
+    }
+
+    // Afficher infos d'un acteur
+    public function infosRealisateur($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteInfosRealisateur = $pdo->prepare("
+        SELECT personne_prenom, personne_nom, personne_sexe, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance
+        FROM personne
+        INNER JOIN realisateur ON realisateur.id_personne = personne.id_personne
+        WHERE realisateur.id_realisateur = :id
+        ");
+
+        $requeteInfosRealisateur->execute(["id"=>$id]);
+
+        
+        $requeteRealisateurFilms = $pdo->prepare("
+            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie
+            FROM film
+            WHERE film.id_realisateur = :id
+        ");
+
+        $requeteRealisateurFilms->execute(["id"=>$id]);
+
+        require "view/infos/infosRealisateur.php";
     }
 }
