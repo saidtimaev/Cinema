@@ -1,6 +1,6 @@
 <?php
 
-// Un namespace est un dossier virtuel dans lequel on peut ranger des classes, des fonctions et d'autres namespace
+// Un namespace est un dossier virtuel dans lequel on peut ranger des classes, des fonctions et d'autres namespaces
 namespace Controller;
 use Model\Connect;
 
@@ -219,13 +219,40 @@ class CinemaController{
         require "view/infos/infosRole.php";
     }
 
-    // Ajouter un genre
-    public function ajoutGenre(){
+    // Ajouter genre affichage
 
-        
-
+    public function ajoutGenreAffichage(){
         require "view/ajouts/ajoutGenre.php";
     }
 
+    // Ajouter un genre
+    public function ajoutGenre(){
+
+        if(isset($_POST['submit'])){
+
+            // on crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
+            $genreLibelle = filter_input(INPUT_POST, "genre_libelle",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
     
+            // Si tous les champs on bien été remplis
+            if($genreLibelle){
+                
+                // on crée un tableau avec nos caractéristiques
+                $genre = [
+                    "genre_libelle" => $_POST["genre_libelle"]
+                ];
+            }
+        }   
+
+        var_dump($_POST);
+        $pdo = Connect::seConnecter();
+
+        $requeteAjoutGenre = $pdo->prepare("
+            INSERT INTO genre (genre_libelle) VALUE (:genre_libelle)
+        ");
+
+        $requeteAjoutGenre->execute(["genre_libelle"=>$_POST["genre_libelle"]]);
+
+        require "view/ajouts/ajoutGenre.php";
+    }
 }

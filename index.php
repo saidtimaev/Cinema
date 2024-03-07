@@ -23,6 +23,7 @@ if(isset($_GET["action"])){
         case "infosGenre" : $ctrlCinema->infosGenre($_GET['id']); break;
         case "infosRole" : $ctrlCinema->infosRole($_GET['id']); break;
         case "ajoutGenre" : $ctrlCinema->ajoutGenre(); break;
+        case "ajoutGenreAffichage" : $ctrlCinema->ajoutGenreAffichage(); break;
 
     }
 }

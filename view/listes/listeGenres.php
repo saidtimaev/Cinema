@@ -18,6 +18,8 @@
     </tbody>
 </table>
 
+<br><a href="index.php?action=ajoutGenreAffichage">Ajouter genre</a>
+
 <?php
 
 $titrePage = "Liste de genres";
