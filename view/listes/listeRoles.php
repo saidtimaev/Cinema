@@ -2,6 +2,8 @@
 
 <p>Il y a <?= $requete->rowCount() ?> Rôles</p>
 
+<a href="index.php?action=ajoutRoleAffichage">Ajouter rôle</a><br><br>
+
 <table>
     <thead>
         <tr>
@@ -18,6 +20,9 @@
             <?php } ?>
     </tbody>
 </table>
+
+
+
 
 <?php
 

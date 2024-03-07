@@ -219,7 +219,7 @@ class CinemaController{
         require "view/infos/infosRole.php";
     }
 
-    // Ajouter genre affichage
+    // Affichage formulaire ajout genre
 
     public function ajoutGenreAffichage(){
         require "view/ajouts/ajoutGenre.php";
@@ -254,5 +254,42 @@ class CinemaController{
         $requeteAjoutGenre->execute(["genre_libelle"=>$_POST["genre_libelle"]]);
 
         require "view/ajouts/ajoutGenre.php";
+    }
+
+
+    // Affichage formulaire ajout rôle
+
+    public function ajoutRoleAffichage(){
+        require "view/ajouts/ajoutRole.php";
+    }
+
+    // Ajouter un rôle
+    public function ajoutRole(){
+
+        if(isset($_POST['submit'])){
+
+            // on crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
+            $roleNom = filter_input(INPUT_POST, "role_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+    
+            // Si tous les champs on bien été remplis
+            if($roleNom){
+                
+                // on crée un tableau avec nos caractéristiques
+                $role = [
+                    "role_nom" => $_POST["role_nom"]
+                ];
+            }
+        }   
+
+        $pdo = Connect::seConnecter();
+
+        $requeteAjoutGenre = $pdo->prepare("
+            INSERT INTO role (role_nom) VALUE (:role_nom)
+        ");
+
+        $requeteAjoutGenre->execute(["role_nom"=>$_POST["role_nom"]]);
+
+        require "view/ajouts/ajoutRole.php";
     }
 }
