@@ -28,6 +28,8 @@ if(isset($_GET["action"])){
         case "ajoutRoleAffichage" : $ctrlCinema->ajoutRoleAffichage(); break;
         case "ajoutActeur" : $ctrlCinema->ajoutActeur(); break;
         case "ajoutActeurAffichage" : $ctrlCinema->ajoutActeurAffichage(); break;
+        case "ajoutRealisateur" : $ctrlCinema->ajoutRealisateur(); break;
+        case "ajoutRealisateurAffichage" : $ctrlCinema->ajoutRealisateurAffichage(); break;
 
     }
 }
