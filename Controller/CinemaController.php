@@ -1,5 +1,6 @@
 <?php
 
+// Un namespace est un dossier virtuel dans lequel on peut ranger des classes, des fonctions et d'autres namespace
 namespace Controller;
 use Model\Connect;
 
@@ -16,7 +17,11 @@ class CinemaController{
             FROM film
         ");
 
+        //  inclut le contenu d'un autre fichier appelé, et provoque une erreur bloquante s'il est indisponible
         require "view/listes/listeFilms.php";
+
+        // include ""; inclut le contenu d'un autre fichier appelé, mais ne provoque pas d'erreur bloquante s'il est indisponible
+        
     }  
     
     // Lister les acteurs 
