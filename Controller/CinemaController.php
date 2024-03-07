@@ -236,22 +236,17 @@ class CinemaController{
     
             // Si tous les champs on bien été remplis
             if($genreLibelle){
-                
-                // on crée un tableau avec nos caractéristiques
-                $genre = [
-                    "genre_libelle" => $_POST["genre_libelle"]
-                ];
+               
             }
         }   
-
-        var_dump($_POST);
+        var_dump($genre);
         $pdo = Connect::seConnecter();
 
         $requeteAjoutGenre = $pdo->prepare("
             INSERT INTO genre (genre_libelle) VALUE (:genre_libelle)
         ");
 
-        $requeteAjoutGenre->execute(["genre_libelle"=>$_POST["genre_libelle"]]);
+        $requeteAjoutGenre->execute(["genre_libelle"=>$genreLibelle]);
 
         require "view/ajouts/ajoutGenre.php";
     }
@@ -274,22 +269,83 @@ class CinemaController{
     
             // Si tous les champs on bien été remplis
             if($roleNom){
-                
-                // on crée un tableau avec nos caractéristiques
-                $role = [
-                    "role_nom" => $_POST["role_nom"]
-                ];
+              
             }
         }   
 
         $pdo = Connect::seConnecter();
 
-        $requeteAjoutGenre = $pdo->prepare("
+        $requeteAjoutRole = $pdo->prepare("
             INSERT INTO role (role_nom) VALUE (:role_nom)
         ");
 
-        $requeteAjoutGenre->execute(["role_nom"=>$_POST["role_nom"]]);
+        
+        $requeteAjoutRole->execute(["role_nom"=>$roleNom]);
 
         require "view/ajouts/ajoutRole.php";
+    }
+
+    // Affichage formulaire ajout acteur
+
+    public function ajoutActeurAffichage(){
+        require "view/ajouts/ajoutActeur.php";
+    }
+
+    // Ajouter un acteur
+    public function ajoutActeur(){
+
+        var_dump($_POST);
+
+
+        if(isset($_POST['submit'])){
+
+
+            // 2 requetes
+            // 1 ajout personne 
+            // lastInsertid
+            // ajout avcteur
+            // on crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
+            
+            $personnePrenom = filter_input(INPUT_POST, "personne_prenom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $personneNom = filter_input(INPUT_POST, "personne_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $personneSexe = filter_input(INPUT_POST, "personne_sexe",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $personneDateNaissance = new \DateTime(filter_input(INPUT_POST, "personne_date_naissance",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            // var_dump($personneDateNaissance);
+
+            // Si tous les champs on bien été remplis
+            if($personnePrenom && $personneNom && $personneSexe && $personneDateNaissance){
+                
+                
+            }
+        }   
+
+        
+        $pdo = Connect::seConnecter();
+
+        $requeteAjoutPersonne = $pdo->prepare("
+            INSERT INTO personne (personne_prenom, personne_nom, personne_sexe, personne_date_naissance) 
+            VALUES (:personne_prenom, :personne_nom, :personne_sexe, :personne_date_naissance)
+        ");
+
+        $requeteAjoutPersonne->execute([
+            "personne_prenom"=> $personnePrenom,
+            "personne_nom"=> $personneNom,
+            "personne_sexe"=> $personneSexe,
+            "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d')
+        ]);
+
+        // Retourne l'id de la dernière ligne insérée 
+        $idPersonne = $pdo->lastInsertId();
+        // var_dump($idPersonne);
+
+        $requeteAjoutActeur = $pdo->prepare("
+        INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+        ");
+
+        $requeteAjoutActeur->execute([
+            "id_personne"=>$idPersonne
+        ]);
+
+        require "view/ajouts/ajoutActeur.php";
     }
 }

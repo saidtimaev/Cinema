@@ -26,6 +26,8 @@ if(isset($_GET["action"])){
         case "ajoutGenreAffichage" : $ctrlCinema->ajoutGenreAffichage(); break;
         case "ajoutRole" : $ctrlCinema->ajoutRole(); break;
         case "ajoutRoleAffichage" : $ctrlCinema->ajoutRoleAffichage(); break;
+        case "ajoutActeur" : $ctrlCinema->ajoutActeur(); break;
+        case "ajoutActeurAffichage" : $ctrlCinema->ajoutActeurAffichage(); break;
 
     }
 }
