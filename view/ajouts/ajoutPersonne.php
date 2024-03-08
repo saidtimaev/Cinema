@@ -1,9 +1,9 @@
 <?php ob_start(); ?>
 
-<h1>Ajout réalisateur</h1>
+<h1>Ajout Personne</h1>
 
 <div>
-    <p>Ajouter un réalisateur</p>
+    <p>Ajouter une personne</p>
     <form action="index.php?action=ajoutPersonne" method="post">
         <p>
             <label>
@@ -29,6 +29,16 @@
                 <input type="date" name="personne_date_naissance">
             </label>
         </p>
+        
+        <p>
+            <label for="professions-choix">La / les profession(s)</label>
+            <select name="professions" id="professions-choix">
+                <option value="">Choix</option>
+                <option value="acteur">Acteur</option>
+                <option value="realisateur">Réalisateur</option>
+                <option value="both">Acteur et réalisateur</option>
+            </select>
+        </p>
         <p>
             <label>
                 <input type="submit" name="submit" value="Ajouter">
@@ -44,7 +54,7 @@
 
 <?php
 
-$titrePage = "Ajout réalisateur";
+$titrePage = "Ajout personne";
 $titreSecond = "";
 $content = ob_get_clean();
 require "view/template.php";

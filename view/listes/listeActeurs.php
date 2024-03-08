@@ -2,7 +2,7 @@
 
 <p>Il y a <?= $requete->rowCount() ?> acteurs</p>
 
-<a href="index.php?action=ajoutActeurAffichage">Ajouter un acteur</a><br><br>
+<a href="index.php?action=ajoutPersonneAffichage">Ajouter un acteur</a><br><br>
 
 <table>
     <thead>

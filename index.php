@@ -26,10 +26,11 @@ if(isset($_GET["action"])){
         case "ajoutGenreAffichage" : $ctrlCinema->ajoutGenreAffichage(); break;
         case "ajoutRole" : $ctrlCinema->ajoutRole(); break;
         case "ajoutRoleAffichage" : $ctrlCinema->ajoutRoleAffichage(); break;
-        case "ajoutActeur" : $ctrlCinema->ajoutActeur(); break;
-        case "ajoutActeurAffichage" : $ctrlCinema->ajoutActeurAffichage(); break;
-        case "ajoutRealisateur" : $ctrlCinema->ajoutRealisateur(); break;
-        case "ajoutRealisateurAffichage" : $ctrlCinema->ajoutRealisateurAffichage(); break;
+        case "ajoutPersonne" : $ctrlCinema->ajoutPersonne(); break;
+        case "ajoutPersonneAffichage" : $ctrlCinema->ajoutPersonneAffichage(); break;
+        case "ajoutFilm" : $ctrlCinema->ajoutFilm(); break;
+        case "ajoutFilmAffichage" : $ctrlCinema->ajoutFilmAffichage(); break;
+        
 
     }
 }

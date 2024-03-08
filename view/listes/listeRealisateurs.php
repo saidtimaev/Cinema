@@ -3,7 +3,7 @@
 <p>Il y a <?= $requete->rowCount() ?> Realisateurs</p>
 
 
-<a href="index.php?action=ajoutRealisateurAffichage">Ajouter un réalisateur</a><br><br>
+<a href="index.php?action=ajoutPersonneAffichage">Ajouter un réalisateur</a><br><br>
 
 
 <table>

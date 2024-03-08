@@ -4,7 +4,7 @@
 
 <div>
     <p>Ajouter un acteur</p>
-    <form action="index.php?action=ajoutActeur" method="post">
+    <form action="index.php?action=ajoutPersonne" method="post">
         <p>
             <label>
                 Prénom :

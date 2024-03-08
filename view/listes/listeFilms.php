@@ -2,6 +2,9 @@
 
 <p>Il y a <?= $requete->rowCount() ?> films</p>
 
+<a href="index.php?action=ajoutFilmAffichage">Ajouter un film</a><br><br>
+
+
 <table>
     <thead>
         <tr>

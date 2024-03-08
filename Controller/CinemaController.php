@@ -285,162 +285,143 @@ class CinemaController{
         require "view/ajouts/ajoutRole.php";
     }
 
-    // Affichage formulaire ajout acteur
+    // Affichage formulaire ajout personne
 
-    public function ajoutActeurAffichage(){
-        require "view/ajouts/ajoutActeur.php";
+    public function ajoutPersonneAffichage(){
+        require "view/ajouts/ajoutPersonne.php";
     }
 
-    // Ajouter un acteur
-    public function ajoutActeur(){
-
-        // var_dump($_POST);
-
+    // Ajouter une personne
+    public function ajoutPersonne(){
 
         if(isset($_POST['submit'])){
 
-
-            // 2 requetes
-            // 1 ajout personne 
-            // lastInsertid
-            // ajout avcteur
-            // on crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
-            
+            // On crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
             $personnePrenom = filter_input(INPUT_POST, "personne_prenom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $personneNom = filter_input(INPUT_POST, "personne_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $personneSexe = filter_input(INPUT_POST, "personne_sexe",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $personneDateNaissance = new \DateTime(filter_input(INPUT_POST, "personne_date_naissance",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            // var_dump($personneDateNaissance);
-
-            // Si tous les champs on bien été remplis
-            if($personnePrenom && $personneNom && $personneSexe && $personneDateNaissance){
-                
-                
-            }
-        }   
-
-        
-        $pdo = Connect::seConnecter();
-
-        $requeteAjoutPersonne = $pdo->prepare("
-            INSERT INTO personne (personne_prenom, personne_nom, personne_sexe, personne_date_naissance) 
-            VALUES (:personne_prenom, :personne_nom, :personne_sexe, :personne_date_naissance)
-        ");
-
-        $requeteAjoutPersonne->execute([
-            "personne_prenom"=> $personnePrenom,
-            "personne_nom"=> $personneNom,
-            "personne_sexe"=> $personneSexe,
-            "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d')
-        ]);
-
-        // Retourne l'id de la dernière ligne insérée 
-        $idPersonne = $pdo->lastInsertId();
-        // var_dump($idPersonne);
-
-        $requeteAjoutActeur = $pdo->prepare("
-        INSERT INTO acteur (id_personne) VALUES (:id_personne) 
-        ");
-
-        $requeteAjoutActeur->execute([
-            "id_personne"=>$idPersonne
-        ]);
-
-        require "view/ajouts/ajoutActeur.php";
-    }
-
-
-     // Affichage formulaire ajout réalisateur
-
-     public function ajoutRealisateurAffichage(){
-        require "view/ajouts/ajoutRealisateur.php";
-    }
-
-    // Ajouter un réalisateur
-    public function ajoutRealisateur(){
-
-        // var_dump($_POST);
-
-
-        if(isset($_POST['submit'])){
-
-
-            // 2 requetes
-            // 1 ajout personne 
-            // lastInsertid
-            // ajout avcteur
-            // on crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
             
-            $personnePrenom = filter_input(INPUT_POST, "personne_prenom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $personneNom = filter_input(INPUT_POST, "personne_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $personneSexe = filter_input(INPUT_POST, "personne_sexe",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $personneDateNaissance = new \DateTime(filter_input(INPUT_POST, "personne_date_naissance",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            // var_dump($personneDateNaissance);
+            $pdo = Connect::seConnecter();
 
-            // Si tous les champs on bien été remplis
-            if($personnePrenom && $personneNom && $personneSexe && $personneDateNaissance){
-                
-                
-            }
-        }   
+            // Si la personne est un acteur et un réalisateur
+            if ($_POST["professions"] == "both"){
 
-        
-        $pdo = Connect::seConnecter();
-
-        $requeteRecherche = $pdo->prepare("
-            SELECT id_personne, personne_prenom, personne_nom, personne_sexe, personne_date_naissance  
-            FROM personne 
-            WHERE personne_prenom = (:personne_prenom) AND personne_nom = (:personne_nom) AND personne_sexe = (:personne_sexe) AND personne_date_naissance = (:personne_date_naissance)
-        ");
-
-        $requeteRecherche->execute([
-            "personne_prenom"=> $personnePrenom,
-            "personne_nom"=> $personneNom,
-            "personne_sexe"=> $personneSexe,
-            "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d')
-        ]);
-
-        var_dump($requeteRecherche);
-        var_dump($requeteRecherche->fetch());
-
-        $recherche = $requeteRecherche->fetch();
-
-        var_dump($recherche[0]);
-        if ($requeteRecherche){
-            $requeteAjoutRealisateur = $pdo->prepare("
-                INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+                $requeteAjoutPersonne = $pdo->prepare("
+                    INSERT INTO personne (personne_prenom, personne_nom, personne_sexe, personne_date_naissance) 
+                    VALUES (:personne_prenom, :personne_nom, :personne_sexe, :personne_date_naissance)
                 ");
 
-            $requeteAjoutRealisateur->execute([
-                "id_personne"=>$recherche
+                $requeteAjoutPersonne->execute([
+                    "personne_prenom"=> $personnePrenom,
+                    "personne_nom"=> $personneNom,
+                    "personne_sexe"=> $personneSexe,
+                    "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d')
                 ]);
-        } else {
 
-        $requeteAjoutPersonne = $pdo->prepare("
-            INSERT INTO personne (personne_prenom, personne_nom, personne_sexe, personne_date_naissance) 
-            VALUES (:personne_prenom, :personne_nom, :personne_sexe, :personne_date_naissance)
-        ");
+                // Retourne l'id de la dernière ligne insérée 
+                $idPersonne = $pdo->lastInsertId();
 
-        $requeteAjoutPersonne->execute([
-            "personne_prenom"=> $personnePrenom,
-            "personne_nom"=> $personneNom,
-            "personne_sexe"=> $personneSexe,
-            "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d')
-        ]);
+                // On lui attribue le métier acteur
+                $requeteAjoutActeur = $pdo->prepare("
+                    INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+                ");
 
-        // Retourne l'id de la dernière ligne insérée 
-        $idPersonne = $pdo->lastInsertId();
-        // var_dump($idPersonne);
+                $requeteAjoutActeur->execute([
+                    "id_personne"=>$idPersonne
+                ]);
 
-        $requeteAjoutRealisateur = $pdo->prepare("
-        INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
-        ");
+                // On lui attribue le métier réalisateur
+                $requeteAjoutRéalisateur = $pdo->prepare("
+                    INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+                ");
 
-        $requeteAjoutRealisateur->execute([
-            "id_personne"=>$idPersonne
-        ]);
-        }
+                $requeteAjoutRéalisateur->execute([
+                    "id_personne"=>$idPersonne
+                ]);
 
-        require "view/ajouts/ajoutRealisateur.php";
+            } elseif ($_POST["professions"] == "acteur"){
+
+                $requeteAjoutPersonne = $pdo->prepare("
+                    INSERT INTO personne (personne_prenom, personne_nom, personne_sexe, personne_date_naissance) 
+                    VALUES (:personne_prenom, :personne_nom, :personne_sexe, :personne_date_naissance)
+                ");
+
+                $requeteAjoutPersonne->execute([
+                    "personne_prenom"=> $personnePrenom,
+                    "personne_nom"=> $personneNom,
+                    "personne_sexe"=> $personneSexe,
+                    "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d')
+                ]);
+
+                // Retourne l'id de la dernière ligne insérée 
+                $idPersonne = $pdo->lastInsertId();
+
+                // On lui attribue le métier acteur
+                $requeteAjoutActeur = $pdo->prepare("
+                    INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+                ");
+
+                $requeteAjoutActeur->execute([
+                    "id_personne"=>$idPersonne
+                ]);
+    
+            } else {
+
+                $requeteAjoutPersonne = $pdo->prepare("
+                    INSERT INTO personne (personne_prenom, personne_nom, personne_sexe, personne_date_naissance) 
+                    VALUES (:personne_prenom, :personne_nom, :personne_sexe, :personne_date_naissance)
+                ");
+
+                $requeteAjoutPersonne->execute([
+                    "personne_prenom"=> $personnePrenom,
+                    "personne_nom"=> $personneNom,
+                    "personne_sexe"=> $personneSexe,
+                    "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d')
+                ]);
+    
+                // Retourne l'id de la dernière ligne insérée 
+                $idPersonne = $pdo->lastInsertId();
+
+                // On lui attribue le métier réalisateur
+                $requeteAjoutRéalisateur = $pdo->prepare("
+                    INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+                ");
+
+                $requeteAjoutRéalisateur->execute([
+                    "id_personne"=>$idPersonne
+                ]);
+            }
+        }   
+
+        require "view/ajouts/ajoutPersonne.php";
     }
+
+    public function ajoutFilmAffichage(){
+        $pdo = Connect::seConnecter();
+    
+        $requeteListeGenres = $pdo->query("
+            SELECT genre_libelle, id_genre
+            FROM genre
+            ORDER BY genre_libelle
+        ");
+    
+        $requeteListeRealisateurs = $pdo->query("
+            SELECT id_realisateur, personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
+            FROM realisateur
+            INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+            ORDER BY personne_nom
+        ");
+
+        require "view/ajouts/ajoutFilm.php";
+    }
+
+    public function ajoutFilm(){
+
+        require "view/ajouts/ajoutFilm.php";
+    }
+
+
+
+    
 }
