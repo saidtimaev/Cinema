@@ -418,6 +418,60 @@ class CinemaController{
 
     public function ajoutFilm(){
 
+        if(isset($_POST['submit'])){
+
+            var_dump($_POST);
+            // On crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
+            $filmTitre = filter_input(INPUT_POST, "film_titre",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmSynopsis = filter_input(INPUT_POST, "film_synopsis",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmDateSortie = new \DateTime(filter_input(INPUT_POST, "film_date_sortie",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            $filmNote = filter_input(INPUT_POST, "film_note",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmAffiche = filter_input(INPUT_POST, "film_affiche",FILTER_SANITIZE_URL);
+            $filmDuree = filter_input(INPUT_POST, "film_duree",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmIdRealisateur = filter_input(INPUT_POST, "id_realisateur",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmGenres = filter_input(INPUT_POST, "genres", FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
+            
+            var_dump($filmGenres);die;
+
+            $pdo = Connect::seConnecter();
+
+            $requeteAjoutFilm = $pdo->prepare("
+                INSERT INTO film ( film_titre, film_synopsis, film_date_sortie, film_note, film_affiche, film_duree, id_realisateur) 
+                VALUES ( :film_titre, :film_synopsis, :film_date_sortie, :film_note, :film_affiche, :film_duree, :id_realisateur)
+            ");
+
+            $requeteAjoutFilm->execute([
+                "film_synopsis"=>$filmSynopsis,
+                "film_titre"=>$filmTitre,
+                "film_date_sortie"=>$filmDateSortie->format('Y-m-d'),
+                "film_note"=>$filmNote,
+                "film_affiche"=>$filmAffiche,
+                "film_duree"=>$filmDuree,
+                "id_realisateur"=>$filmIdRealisateur
+            ]);
+
+            $requeteListeGenres = $pdo->query("
+                SELECT genre_libelle, id_genre
+                FROM genre
+                ORDER BY genre_libelle
+            ");
+    
+            $requeteListeRealisateurs = $pdo->query("
+                SELECT id_realisateur, personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
+                FROM realisateur
+                INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+                ORDER BY personne_nom
+            ");
+
+
+            // Retourne l'id de la dernière ligne insérée 
+            $idFilm = $pdo->lastInsertId();
+
+            // $requeteAjoutGenreFilm
+            
+            
+        }
+
         require "view/ajouts/ajoutFilm.php";
     }
 
