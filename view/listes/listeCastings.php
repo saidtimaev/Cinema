@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
 
 
-<a href="index.php?action=ajoutCastingFilm">Ajouter un casting</a><br><br>
+<a href="index.php?action=ajoutCastingAffichage">Ajouter un casting</a><br><br>
 
 
 <table>
@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <?php 
-            foreach($requete->fetchAll() as $castingFilm){ ?>
+            foreach($requeteListeCastings->fetchAll() as $castingFilm){ ?>
                 <tr>
                     <td><?php echo $castingFilm["film_titre"] ?></td>
                     <td><?= $castingFilm["role_nom"] ?></td>

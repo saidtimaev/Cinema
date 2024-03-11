@@ -77,7 +77,7 @@ class CinemaController{
     // Lister les castings
     public function listeCastings(){
         $pdo = Connect::seConnecter();
-        $requete = $pdo->query("
+        $requeteListeCastings = $pdo->query("
             SELECT film_titre, role_nom, personne_prenom, personne_nom
             from casting_film
             INNER JOIN film ON casting_film.id_film = film.id_film
@@ -507,7 +507,107 @@ class CinemaController{
         require "view/ajouts/ajoutFilm.php";
     }
 
+    public function ajoutCastingAffichage(){
+
+        // On appelle la méthode statique seConnecter de la classe Connect qui instancie un objet PDO stocké dans $pdo
+        $pdo = Connect::seConnecter();
+
+        // Pour récupèrer la liste des films
+        $requeteListeFilms = $pdo->query("
+            SELECT id_film, film_titre
+            FROM film
+            ORDER BY film_titre
+        ");
+
+        // Pour récupèrer la liste des rôles
+        $requeteListeRoles = $pdo->query("
+            SELECT role_nom, id_role
+            FROM role
+            ORDER BY role_nom
+        ");
+
+        $requeteListeActeurs = $pdo->query("
+            SELECT id_acteur,personne_nom, personne_prenom
+            FROM acteur
+            INNER JOIN personne ON acteur.id_personne = personne.id_personne
+            ORDER BY personne_nom
+        ");
+
+        require "view/ajouts/ajoutCasting.php";
+
+    }
+
+    public function ajoutCasting(){
+        // var_dump($_POST);die;
+        if(isset($_POST['submit'])){
+
+            $idFilm = filter_input(INPUT_POST, "film",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idRole = filter_input(INPUT_POST, "role",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idActeur = filter_input(INPUT_POST, "acteur",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $pdo = Connect::seConnecter();
+
+            // Pour récupèrer la liste des films
+        $requeteListeFilms = $pdo->query("
+        SELECT id_film, film_titre
+        FROM film
+        ORDER BY film_titre
+        ");
+
+        // Pour récupèrer la liste des rôles
+        $requeteListeRoles = $pdo->query("
+            SELECT role_nom, id_role
+            FROM role
+            ORDER BY role_nom
+        ");
+
+        $requeteListeActeurs = $pdo->query("
+            SELECT id_acteur,personne_nom, personne_prenom
+            FROM acteur
+            INNER JOIN personne ON acteur.id_personne = personne.id_personne
+            ORDER BY personne_nom
+        ");
 
 
-    
+            $requeteAjoutCasting = $pdo->prepare("
+                INSERT INTO casting_film (id_film, id_role, id_acteur) VALUES (:id_film, :id_role, :id_acteur)
+            ");
+
+            $requeteAjoutCasting->execute([
+                "id_film"=>$idFilm,
+                "id_role"=>$idRole,
+                "id_acteur"=>$idActeur
+            ]);
+        }
+
+        require "view/ajouts/ajoutCasting.php";
+    }
+
+
+    public function modificationRoleAffichage(){
+
+        
+        require "view/modifications/modificationActeur.php";
+    }
+
+
+
+
+    public function modificationRole($idRole){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteNomGenre = $pdo->prepare("
+            SELECT role_nom 
+            FROM role 
+            WHERE id_role = :id_role
+        ");
+
+        $requeteNomGenre->execute([
+            "id_role"=>$idRole
+        ]);
+
+        require "view/modifications/modificationActeur.php";
+    }
+
 }
