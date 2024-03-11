@@ -40,7 +40,7 @@ if(isset($_GET["action"])){
         case "modificationRole" : $ctrlCinema->modificationRole($_GET['id']); break;
         case "modificationRoleAffichage" : $ctrlCinema->modificationRoleAffichage($_GET['id']); break;
         
-        
+        // Faille XSS
         
 
     }

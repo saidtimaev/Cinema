@@ -212,7 +212,7 @@ class CinemaController{
         $pdo = Connect::seConnecter();
 
         $requeteInfosRole = $pdo->prepare("
-        SELECT role_nom
+        SELECT role_nom, id_role
         from role
         WHERE id_role = :id
         ");
@@ -584,30 +584,53 @@ class CinemaController{
     }
 
 
-    public function modificationRoleAffichage(){
+    public function modificationRoleAffichage($id){
 
-        
-        require "view/modifications/modificationActeur.php";
-    }
-
-
-
-
-    public function modificationRole($idRole){
+        // reque select role qui a l'id $id
 
         $pdo = Connect::seConnecter();
 
-        $requeteNomGenre = $pdo->prepare("
+        $requeteNomRole = $pdo->prepare("
             SELECT role_nom 
             FROM role 
             WHERE id_role = :id_role
         ");
 
-        $requeteNomGenre->execute([
-            "id_role"=>$idRole
+        $requeteNomRole->execute([
+            "id_role"=>$id
         ]);
 
-        require "view/modifications/modificationActeur.php";
+        // renvoie variable role dans la vue 
+        require "view/modifications/modificationRole.php";
+    }
+
+
+
+
+    public function modificationRole($id){
+
+        if(isset($_POST['submit'])){
+
+            $roleNom = filter_input(INPUT_POST, "role_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+
+            $pdo = Connect::seConnecter();
+
+          
+
+            $requeteNomRole = $pdo->prepare("
+                UPDATE role
+                SET role_nom = :role_nom
+                WHERE id_role = :id_role
+            ");
+
+            $requeteNomRole->execute([
+                "role_nom"=>$roleNom,
+                "id_role"=>$id
+            ]);
+        }
+
+        require "view/modifications/modificationRole.php";
     }
 
 }

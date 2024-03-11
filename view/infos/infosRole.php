@@ -15,7 +15,7 @@
 <p>Il y a <?= $requeteActeursRole->rowCount() ?> personnes</p>
 
 
-<a href="index.php?action=modificationRoleAffichage">Modifier ce rôle</a><br><br>
+<a href="index.php?action=modificationRoleAffichage&id=<?= $role["id_role"] ?>">Modifier ce rôle</a><br><br>
 
 <table>
     <thead>
