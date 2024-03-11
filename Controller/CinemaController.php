@@ -431,7 +431,7 @@ class CinemaController{
             $filmIdRealisateur = filter_input(INPUT_POST, "id_realisateur",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $filmGenres = filter_input(INPUT_POST, "genres", FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
             
-            var_dump($filmGenres);die;
+            // var_dump($filmGenres);die;
 
             $pdo = Connect::seConnecter();
 
@@ -450,6 +450,9 @@ class CinemaController{
                 "id_realisateur"=>$filmIdRealisateur
             ]);
 
+           // Retourne l'id de la dernière ligne insérée 
+            $idFilm = $pdo->lastInsertId();
+
             $requeteListeGenres = $pdo->query("
                 SELECT genre_libelle, id_genre
                 FROM genre
@@ -463,11 +466,24 @@ class CinemaController{
                 ORDER BY personne_nom
             ");
 
+      
+            
+          
+            
 
-            // Retourne l'id de la dernière ligne insérée 
-            $idFilm = $pdo->lastInsertId();
+            foreach($filmGenres as $filmGenre){
+                
+                $requeteAjoutGenreFilm = $pdo->prepare("
+                    INSERT INTO genre_film (id_film, id_genre) VALUES (:id_film, :id_genre)
+                ");
 
-            // $requeteAjoutGenreFilm
+                $requeteAjoutGenreFilm->execute([
+                    "id_film"=>$idFilm,
+                    "id_genre"=>$filmGenre
+                ]);
+
+            }
+          
             
             
         }

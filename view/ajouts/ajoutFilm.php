@@ -10,25 +10,25 @@
         <p>
             <label>
                 Titre :
-                <input type="text" name="film_titre" value="aaa">
+                <input type="text" name="film_titre" value="">
             </label>
         </p>
         <p>
             <label>
                 Note :
-                <input type="number" name="film_note" min="0" value="5">
+                <input type="number" name="film_note" min="0" value="">
             </label>
         </p>
         <p>
             <label>
                 Durée en minutes :
-                <input type="number" name="film_duree" value="120">
+                <input type="number" name="film_duree" value="">
             </label>
         </p>
         <p>
             <label>
                 Date de sortie :
-                <input type="date" name="film_date_sortie" value="2024-01-01">
+                <input type="date" name="film_date_sortie" value="">
             </label>
         </p>
         <p>
@@ -53,7 +53,7 @@
         </p>
         <p>
             <label for="film_affiche">Affiche :</label>
-            <input type="text" name="film_affiche" value="https://fr.web.img6.acsta.net/medias/04/34/49/043449_af.jpg" />
+            <input type="text" name="film_affiche" value="" />
         </p>
         <p>
             <label>
