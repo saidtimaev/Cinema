@@ -17,6 +17,7 @@
                         <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeRealisateurs">Liste Realisateurs</a></li>
                         <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeGenres">Liste Genres</a></li>
                         <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeRoles">Liste Roles</a></li>
+                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeCastings">Liste Castings</a></li>
                     </ul>
                 </nav>
                

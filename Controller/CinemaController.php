@@ -74,6 +74,22 @@ class CinemaController{
         require "view/listes/listeRoles.php";
     }
 
+    // Lister les castings
+    public function listeCastings(){
+        $pdo = Connect::seConnecter();
+        $requete = $pdo->query("
+            SELECT film_titre, role_nom, personne_prenom, personne_nom
+            from casting_film
+            INNER JOIN film ON casting_film.id_film = film.id_film
+            INNER JOIN role ON casting_film.id_role = role.id_role
+            INNER JOIN acteur ON casting_film.id_acteur = acteur.id_acteur
+            INNER JOIN personne ON acteur.id_personne = personne.id_personne
+            
+        ");
+
+        require "view/listes/listeCastings.php";
+    }
+
     // Afficher infos d'un film 
     public function infosFilm($id){
 
@@ -420,7 +436,7 @@ class CinemaController{
 
         if(isset($_POST['submit'])){
 
-            var_dump($_POST);
+            // var_dump($_POST);
             // On crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
             $filmTitre = filter_input(INPUT_POST, "film_titre",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $filmSynopsis = filter_input(INPUT_POST, "film_synopsis",FILTER_SANITIZE_FULL_SPECIAL_CHARS);

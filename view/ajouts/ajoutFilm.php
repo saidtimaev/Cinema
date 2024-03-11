@@ -40,7 +40,7 @@
         </p>
         <p>
                 <label> Résumé : </label>
-                <textarea id="synopsis" name="film_synopsis" rows="5" cols="33">resumé</textarea>
+                <textarea id="synopsis" name="film_synopsis" rows="5" cols="33"></textarea>
         </p>
         <p>
             <label for="realisateur-choix">Réalisateur</label>
