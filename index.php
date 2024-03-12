@@ -11,6 +11,10 @@ spl_autoload_register(function ($class_name){
 
 $ctrlCinema = new CinemaController();
 if(isset($_GET["action"])){
+
+    
+
+
     switch ($_GET["action"]){
         // LISTES
         case "listeFilms" : $ctrlCinema->listeFilms(); break;
@@ -41,6 +45,9 @@ if(isset($_GET["action"])){
         case "modificationRoleAffichage" : $ctrlCinema->modificationRoleAffichage($_GET['id']); break;
         case "modificationGenre" : $ctrlCinema->modificationGenre($_GET['id']); break;
         case "modificationGenreAffichage" : $ctrlCinema->modificationGenreAffichage($_GET['id']); break;
+        case "modificationActeur" : $ctrlCinema->modificationActeur($_GET['id']); break;
+        case "modificationActeurAffichage" : $ctrlCinema->modificationActeurAffichage($_GET['id']); break;
+
 
         
         // Faille XSS

@@ -3,6 +3,9 @@
 <?php $realisateur = $requeteInfosRealisateur->fetch();  
 ?>
 
+<a href="index.php?action=modificationPersonneAffichage&id=<?= $id ?>">Modifier ce réalisateur</a><br><br>
+
+
 <h1><?php echo $realisateur["personne_prenom"]." ".$realisateur["personne_nom"]."<br>"; ?> </h1>
 <p>Date de naissance : <?php echo $realisateur["personne_date_naissance"]; ?></p>
 <p>Genre : <?php echo $realisateur["personne_sexe"]; ?></p>

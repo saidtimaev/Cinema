@@ -674,5 +674,28 @@ class CinemaController{
 
         header("Location:index.php?action=modificationGenreAffichage&id=".$id);
 
-}   
+    }   
+
+    public function modificationActeurAffichage($id){
+
+        $pdo = Connect::seConnecter();
+
+        
+
+        require "view/modifications/modificationGenre.php";
+    }
+
+
+
+
+    public function modificationActeur($id){
+        
+
+        if(isset($_POST['submit'])){
+           
+        }
+
+
+    }   
+
 }

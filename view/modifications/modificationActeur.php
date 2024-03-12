@@ -4,7 +4,7 @@
 
 <div>
     <p>Modifier un acteur</p>
-    <form action="index.php?action=ajoutPersonne" method="post">
+    <form action="index.php?action=modificationPersonne" method="post">
         <p>
             <label>
                 Prénom :
@@ -28,6 +28,16 @@
                 Date de naissance :
                 <input type="date" name="personne_date_naissance">
             </label>
+        </p>
+        
+        <p>
+            <label for="professions-choix">La / les profession(s)</label>
+            <select name="professions" id="professions-choix">
+                <option value="">Choix</option>
+                <option value="acteur">Acteur</option>
+                <option value="realisateur">Réalisateur</option>
+                <option value="both">Acteur et réalisateur</option>
+            </select>
         </p>
         <p>
             <label>
