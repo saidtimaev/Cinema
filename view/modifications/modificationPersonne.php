@@ -1,32 +1,34 @@
 <?php ob_start(); ?>
 
-<h1>Modification acteur</h1>
+<?php $personne = $requetePersonne->fetch() ?>
+
+<h1>Modification personne</h1>
 
 <div>
-    <p>Modifier un acteur</p>
-    <form action="index.php?action=modificationPersonne" method="post">
+    <p>Modifier une personne</p>
+    <form action="index.php?action=modificationPersonne&id=<?= $id ?>" method="post">
         <p>
             <label>
                 Prénom :
-                <input type="text" name="personne_prenom">
+                <input type="text" name="personne_prenom " value="<?= $personne["personne_prenom"] ?>">
             </label>
         </p>
         <p>
             <label>
                 Nom :
-                <input type="text" name="personne_nom">
+                <input type="text" name="personne_nom" value="<?= $personne["personne_nom"] ?>">
             </label>
         </p>
         <p>
             <label>
                 Sexe :
-                <input type="text" name="personne_sexe">
+                <input type="text" name="personne_sexe" value="<?= $personne["personne_sexe"] ?>">
             </label>
         </p>
         <p>
             <label>
                 Date de naissance :
-                <input type="date" name="personne_date_naissance">
+                <input type="date" name="personne_date_naissance" value="<?= $personne["personne_date_naissance"] ?>">
             </label>
         </p>
         
@@ -41,7 +43,7 @@
         </p>
         <p>
             <label>
-                <input type="submit" name="submit" value="Ajouter">
+                <input type="submit" name="submit" value="Modifier">
             </label>
         </p>
     </form>
@@ -54,7 +56,7 @@
 
 <?php
 
-$titrePage = "Modification acteur";
+$titrePage = "Modification personne";
 $titreSecond = "";
 $content = ob_get_clean();
 require "view/template.php";
