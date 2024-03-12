@@ -5,26 +5,48 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="public/css/styles.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <title><?= $titrePage ?></title>
     </head>
-    <body >
+    <div id="wrapper">
+        <body >
             <header >
+                <img>
+                    Logo
+                </img>
                 <nav>
                     <ul>
-                        <li class="nav-item mx-4"><a class="nav-link " href="index.php?action=listeFilms">Liste Films</a></li>
-                        <li class="nav-item mx-4"><a class="nav-link " href="index.php?action=listeActeurs">Liste Acteurs</a></li>
-                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeRealisateurs">Liste Realisateurs</a></li>
-                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeGenres">Liste Genres</a></li>
-                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeRoles">Liste Roles</a></li>
-                        <li class="nav-item mx-4"><a class="nav-link" href="index.php?action=listeCastings">Liste Castings</a></li>
+                        <li><a href="index.php?action=listeFilms">Films</a></li>
+                        <li><a href="index.php?action=listeActeurs">Acteurs</a></li>
+                        <li><a href="index.php?action=listeRealisateurs">Realisateurs</a></li>
+                        <li><a href="index.php?action=listeGenres">Genres</a></li>
+                        <li><a href="index.php?action=listeRoles">Rôles</a></li>
+                        <li><a href="index.php?action=listeCastings">Castings</a></li>
                     </ul>
                 </nav>
-               
+                <div class="recherche">
+                    <form>
+                        <label>Recherche : </label>
+                        <input type="text" name=" " value="" placeholder="Tapez votre recherche ici..">
+                    </form>
+                </div>
             </header>
             <main>
                 <h2><?= $titreSecond ?></h2>
                 <?= $content ?>
             </main>
-    </body>
+            <footer>
+                <nav>
+                    <li><a href="">Facebook</a></li>
+                    <li><a href="">Youtube</a></li>
+                    <li><a href="">Twitter</a></li>
+                    <li><a href="">Instagram</a></li>
+                    <li><a href="">A propos</a></li>
+                    <li><a href="">Nous contacter</a></li>
+                    <li><a href="">CGU</a></li>
+                    <li><a href="">Aide</a></li>
+                    <li><a href="">Cookies</a></li>
+                </nav>
+            </footer>
+        </body>
+    </div>
 </html>
