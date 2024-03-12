@@ -1,10 +1,13 @@
 <?php ob_start(); ?>
-<?php $nomRole = $requeteNomRole->fetch(); ?>
+<?php 
+
+$nomRole = $requeteNomRole->fetch(); ?>
+
 <h1>Modification rôle</h1>
 
 <div>
     <p>Modifier un rôle</p>
-    <form action="index.php?action=modificationRole" method="post">
+    <form action="index.php?action=modificationRole&id=<?= $nomRole["id_role"] ?>" method="post">
         <p>
             <label>
                 Nom du rôle :

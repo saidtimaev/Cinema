@@ -591,7 +591,7 @@ class CinemaController{
         $pdo = Connect::seConnecter();
 
         $requeteNomRole = $pdo->prepare("
-            SELECT role_nom 
+            SELECT role_nom
             FROM role 
             WHERE id_role = :id_role
         ");
@@ -608,15 +608,12 @@ class CinemaController{
 
 
     public function modificationRole($id){
+        
 
         if(isset($_POST['submit'])){
-
             $roleNom = filter_input(INPUT_POST, "role_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            
 
             $pdo = Connect::seConnecter();
-
-          
 
             $requeteNomRole = $pdo->prepare("
                 UPDATE role
@@ -628,9 +625,54 @@ class CinemaController{
                 "role_nom"=>$roleNom,
                 "id_role"=>$id
             ]);
+
         }
 
-        require "view/modifications/modificationRole.php";
+        header("Location:index.php?action=modificationRoleAffichage&id=".$id);
     }
 
+    public function modificationGenreAffichage($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteGenre = $pdo->prepare("
+            SELECT genre_libelle
+            FROM genre 
+            WHERE id_genre = :id_genre
+        ");
+
+        $requeteGenre->execute([
+            "id_genre"=>$id
+        ]);
+
+        require "view/modifications/modificationGenre.php";
+    }
+
+
+
+
+    public function modificationGenre($id){
+        
+
+        if(isset($_POST['submit'])){
+            $genreLibelle = filter_input(INPUT_POST, "genre_libelle",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $pdo = Connect::seConnecter();
+
+            $requeteGenreLibelle = $pdo->prepare("
+                UPDATE genre    
+                SET genre_libelle = :genre_libelle
+                WHERE id_genre = :id_genre
+            ");
+
+            $requeteGenreLibelle->execute([
+                "genre_libelle"=>$genreLibelle,
+                "id_genre"=>$id
+            ]);
+
+        }
+
+        header("Location:index.php?action=modificationGenreAffichage&id=".$id);
+
+}   
 }

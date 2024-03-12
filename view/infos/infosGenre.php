@@ -1,11 +1,10 @@
 <?php ob_start(); ?>
-
 <?php $genre = $requeteInfosGenre->fetch();  
 ?>
 
 <h1><?php echo $genre["genre_libelle"]."<br>"; ?> </h1>
 
-
+<a href="index.php?action=modificationGenreAffichage&id=<?= $id ?>">Modifier ce genre</a><br><br>
 
    
 

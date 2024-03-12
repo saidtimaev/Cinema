@@ -39,6 +39,9 @@ if(isset($_GET["action"])){
         // MODIFICATIONS
         case "modificationRole" : $ctrlCinema->modificationRole($_GET['id']); break;
         case "modificationRoleAffichage" : $ctrlCinema->modificationRoleAffichage($_GET['id']); break;
+        case "modificationGenre" : $ctrlCinema->modificationGenre($_GET['id']); break;
+        case "modificationGenreAffichage" : $ctrlCinema->modificationGenreAffichage($_GET['id']); break;
+
         
         // Faille XSS
         
