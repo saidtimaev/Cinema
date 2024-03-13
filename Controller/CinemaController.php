@@ -107,7 +107,7 @@ class CinemaController{
 
         
         $requeteActeursRoles = $pdo->prepare("
-            SELECT personne_prenom, personne_nom, role_nom
+            SELECT casting_film.id_film, casting_film.id_role, casting_film.id_acteur, personne_prenom, personne_nom, role_nom
             FROM casting_film
             INNER JOIN film ON casting_film.id_film = film.id_film
             INNER JOIN role ON casting_film.id_role = role.id_role
@@ -884,6 +884,18 @@ class CinemaController{
         $requeteRealisateurFilm->execute([
             "id_film"=>$id
         ]);
+
+        $requeteActeursRoles = $pdo->prepare("
+            SELECT casting_film.id_film, casting_film.id_role, casting_film.id_acteur, personne_prenom, personne_nom, role_nom
+            FROM casting_film
+            INNER JOIN film ON casting_film.id_film = film.id_film
+            INNER JOIN role ON casting_film.id_role = role.id_role
+            INNER JOIN acteur ON casting_film.id_acteur = acteur.id_acteur
+            INNER JOIN personne ON acteur.id_personne = personne.id_personne
+            WHERE casting_film.id_film = :id
+        ");
+
+        $requeteActeursRoles->execute(["id"=>$id]);
         
 
     require "view/modifications/modificationFilm.php";
@@ -966,11 +978,51 @@ class CinemaController{
         }
 
 
+        
         // require "view/modifications/modificationFilm.php";
-        header("Location:index.php?action=modificationFilmAffichage&id=$id");
-    
+        header("Location:index.php?action=modificationFilmAffichage&id=$id");die;
 
     }
+
+    public function suppressionFilm($id){
+        
+        $pdo = Connect::seConnecter();
+
+        $requeteSupprimerFilm = $pdo->prepare("
+            DELETE 
+            FROM film 
+            WHERE id_film = :id_film
+        ");
+
+        $requeteSupprimerFilm->execute([
+            "id_film"=>$id
+        ]);
+
+        header("Location:index.php?action=listeFilms");die;
+    }
+    
+
+    public function suppressionCasting($idFilm, $idRole, $idActeur){
+        // var_dump($_GET);die;
+        $pdo = Connect::seConnecter();
+
+        $requeteSupprimerCasting = $pdo->prepare("
+            DELETE 
+            FROM casting_film 
+            WHERE id_film = :id_film AND id_role =:id_role AND id_acteur =:id_acteur
+        ");
+
+        $requeteSupprimerCasting->execute([
+            "id_film"=>$idFilm,
+            "id_role"=>$idRole,
+            "id_acteur"=>$idActeur
+        ]);
+
+    
+        header("Location:index.php?action=modificationFilmAffichage&id=$idFilm");die;
+    }
 }
+
+
 
 

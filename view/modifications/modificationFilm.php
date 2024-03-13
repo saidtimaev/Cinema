@@ -96,6 +96,32 @@ var_dump($film["film_date_sortie"]);
   
 </div>
 
+<p>Liste des rôles et des acteurs :</p>
+
+<p>Il y a <?= $requeteActeursRoles->rowCount() ?> acteurs</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Acteur</th>
+            <th>Rôle</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php 
+            foreach($requeteActeursRoles->fetchAll() as $acteurRole){ ?>
+                <tr>
+                    <td><?php echo $acteurRole["personne_prenom"]." ".$acteurRole["personne_nom"]; ?></td>
+                    <td><?php echo $acteurRole["role_nom"]; ?></td>
+                    <td><a href="index.php?action=suppressionCasting&id_film=<?= $acteurRole["id_film"]?>&id_role=<?= $acteurRole["id_role"]?>&id_acteur=<?= $acteurRole["id_acteur"]?>">X</a></td>
+                </tr>
+            <?php } 
+            
+            ?>
+    </tbody>
+    
+</table>
 
 
 
