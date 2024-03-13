@@ -3,7 +3,7 @@
 <?php $realisateur = $requeteInfosRealisateur->fetch();  
 ?>
 
-<a href="index.php?action=modificationPersonneAffichage&id=<?= $id ?>">Modifier ce réalisateur</a><br><br>
+<a href="index.php?action=modificationRealisateurAffichage&id=<?= $id ?>">Modifier ce réalisateur</a><br><br>
 
 
 <h1><?php echo $realisateur["personne_prenom"]." ".$realisateur["personne_nom"]."<br>"; ?> </h1>

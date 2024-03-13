@@ -45,8 +45,12 @@ if(isset($_GET["action"])){
         case "modificationRoleAffichage" : $ctrlCinema->modificationRoleAffichage($_GET['id']); break;
         case "modificationGenre" : $ctrlCinema->modificationGenre($_GET['id']); break;
         case "modificationGenreAffichage" : $ctrlCinema->modificationGenreAffichage($_GET['id']); break;
-        case "modificationPersonne" : $ctrlCinema->modificationPersonne($_GET['id']); break;
-        case "modificationPersonneAffichage" : $ctrlCinema->modificationPersonneAffichage($_GET['id']); break;
+        case "modificationActeur" : $ctrlCinema->modificationPersonne($_GET['id']); break;
+        case "modificationActeurAffichage" : $ctrlCinema->modificationActeurAffichage($_GET['id']); break;
+        case "modificationFilm" : $ctrlCinema->modificationFilm($_GET['id']); break;
+        case "modificationFilmAffichage" : $ctrlCinema->modificationFilmAffichage($_GET['id']); break;
+        
+
 
 
         

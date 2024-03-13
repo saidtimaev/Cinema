@@ -676,7 +676,7 @@ class CinemaController{
 
     }   
 
-    public function modificationPersonneAffichage($id){
+    public function modificationActeurAffichage($id){
 
         $pdo = Connect::seConnecter();
 
@@ -689,9 +689,54 @@ class CinemaController{
                     $requetePersonne->execute([
                         "id_personne"=>$id
                     ]);
+
+        $requeteListeCastingsActeur = $pdo->prepare("
+            SELECT film_titre, role_nom, personne_prenom, personne_nom
+            from casting_film
+            INNER JOIN film ON casting_film.id_film = film.id_film
+            INNER JOIN role ON casting_film.id_role = role.id_role
+            INNER JOIN acteur ON casting_film.id_acteur = acteur.id_acteur
+            INNER JOIN personne ON acteur.id_personne = personne.id_personne
+            WHERE personne.id_personne = :id_personne
+        ");
+
+        $requeteListeCastingsActeur->execute([
+            "id_personne"=>$id
+        ]);
+
+       
+        require "view/modifications/modificationActeur.php";
+    }
+
+    public function modificationRealisateurAffichage($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requetePersonne = $pdo->prepare("
+                       SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance
+                       FROM personne
+                        WHERE id_personne = :id_personne
+                    ");
+
+                    $requetePersonne->execute([
+                        "id_personne"=>$id
+                    ]);
+
+
+        $requeteListeFilmsRealisateur = $pdo->prepare("
+            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie
+            FROM film
+            INNER JOIN realisateur ON realisateur.id_realisateur = film.id_realisateur
+            WHERE id_personne = :id_personne
+            ORDER BY film_date_sortie DESC
+        ");
+
+        $requeteListeFilmsRealisateur->execute([
+            "id_personne"=>$id
+        ]);
         
 
-        require "view/modifications/modificationPersonne.php";
+        require "view/modifications/modificationRealisateur.php";
     }
 
 
@@ -725,7 +770,189 @@ class CinemaController{
             "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d'),
             "id_personne"=>$id
         ]);
-        }  
-        header("Location:index.php?action=modificationPersonneAffichage&id=".$id);
-    }   
+
+        $requeteSuppressionRoleActeur = $pdo->prepare("
+            DELETE FROM acteur
+            WHERE id_personne = :id_personne
+        ");
+
+        $requeteSuppressionRoleActeur->execute([
+            "id_personne"=>$id
+        ]);
+
+        $requeteSuppressionRoleRealisateur = $pdo->prepare("
+            DELETE FROM realisateur
+            WHERE id_personne = :id_personne
+        ");
+
+        $requeteSuppressionRoleRealisateur->execute([
+            "id_personne"=>$id
+        ]);
+
+        // Si la personne est un acteur et un réalisateur
+        if ($_POST["professions"] == "both"){
+
+            // On lui attribue le métier acteur
+            $requeteAjoutActeur = $pdo->prepare("
+                INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier réalisateur
+            $requeteAjoutRéalisateur = $pdo->prepare("
+                INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutRéalisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+        } elseif ($_POST["professions"] == "acteur"){
+
+            // On lui attribue le métier acteur
+            $requeteAjoutActeur = $pdo->prepare("
+                INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+        } else {
+
+            // On lui attribue le métier réalisateur
+            $requeteAjoutRéalisateur = $pdo->prepare("
+                INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutRéalisateur->execute([
+                "id_personne"=>$id
+            ]);
+        }
+        header("Location:index.php?action=listeCastings");
+        // require "view/modifications/modificationPersonne.php";
+        }     
+    }
+
+    
+    public function modificationFilmAffichage($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteInfosFilm = $pdo->prepare("
+            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, film_duree, film_note, film_synopsis, personne_nom, personne_prenom, film_affiche
+            FROM film 
+            INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+            INNER JOIN personne ON personne.id_personne = realisateur.id_personne
+            WHERE id_film = :id
+        ");
+
+        $requeteInfosFilm->execute(["id"=>$id]);
+
+        $requeteListeGenres = $pdo->query("
+            SELECT genre_libelle, id_genre
+            FROM genre
+            ORDER BY genre_libelle
+        ");
+
+        $requeteListeRealisateurs = $pdo->query("
+        SELECT id_realisateur, personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
+        FROM realisateur
+        INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+        ORDER BY personne_nom
+    ");
+
+    require "view/modifications/modificationFilm.php";
+
+    }
+
+    public function modificationFilm($id){
+
+        if(isset($_POST['submit'])){
+
+            // var_dump($_POST);
+            // On crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
+            $filmTitre = filter_input(INPUT_POST, "film_titre",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmSynopsis = filter_input(INPUT_POST, "film_synopsis",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmDateSortie = new \DateTime(filter_input(INPUT_POST, "film_date_sortie",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            $filmNote = filter_input(INPUT_POST, "film_note",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmAffiche = filter_input(INPUT_POST, "film_affiche",FILTER_SANITIZE_URL);
+            $filmDuree = filter_input(INPUT_POST, "film_duree",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmIdRealisateur = filter_input(INPUT_POST, "id_realisateur",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $filmGenres = filter_input(INPUT_POST, "genres", FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
+            
+            // var_dump($filmGenres);die;
+
+            $pdo = Connect::seConnecter();
+
+            $requeteModificationFilm = $pdo->prepare("
+                UPDATE film 
+                SET film_titre = :film_titre, film_synopsis = :film_synopsis, film_date_sortie = :film_date_sortie, film_note = :film_note, film_affiche = :film_affiche, film_duree = :film_duree, id_realisateur = :id_realisateur
+                WHERE id_film = :id_film
+            ");
+
+            $requeteModificationFilm->execute([
+                "film_synopsis"=>$filmSynopsis,
+                "film_titre"=>$filmTitre,
+                "film_date_sortie"=>$filmDateSortie->format('Y-m-d'),
+                "film_note"=>$filmNote,
+                "film_affiche"=>$filmAffiche,
+                "film_duree"=>$filmDuree,
+                "id_realisateur"=>$filmIdRealisateur,
+                "id_film"=>$id
+            ]);
+
+           // Retourne l'id de la dernière ligne insérée 
+            $idFilm = $pdo->lastInsertId();
+
+            $requeteListeGenres = $pdo->query("
+                SELECT genre_libelle, id_genre
+                FROM genre
+                ORDER BY genre_libelle
+            ");
+    
+            $requeteListeRealisateurs = $pdo->query("
+                SELECT id_realisateur, personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
+                FROM realisateur
+                INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+                ORDER BY personne_nom
+            ");
+
+      
+            $requeteSuppressionGenresFilm = $pdo->prepare("
+                DELETE FROM genre_film
+                WHERE id_film = :id_film
+            ");
+
+            $requeteSuppressionGenresFilm->execute([
+                "id_film"=>$id
+            ]);
+            
+          
+            
+
+            foreach($filmGenres as $filmGenre){
+                
+                $requeteAjoutGenreFilm = $pdo->prepare("
+                    INSERT INTO genre_film (id_film, id_genre) VALUES (:id_film, :id_genre)
+                ");
+
+                $requeteAjoutGenreFilm->execute([
+                    "id_film"=>$id,
+                    "id_genre"=>$filmGenre
+                ]);
+
+            }
+          
+        }
+
+        header("Location:index.php?action=modificationFilmAffichage&id=$id");
+    
+
+    }
 }
+
+

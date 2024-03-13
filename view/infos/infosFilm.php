@@ -3,6 +3,8 @@
 <?php $film = $requeteInfosFilm->fetch();  
 ?>
 
+<a href="index.php?action=modificationFilmAffichage&id=<?= $id ?>">Modifier ce film</a><br><br>
+
 <h1><?php echo $film["film_titre"]."<br>"; ?> </h1>
 <p>Date de Sortie : <?php echo $film["film_date_sortie"]; ?></p>
 <p>Durée : <?php echo $film["film_duree"]; ?> min</p>

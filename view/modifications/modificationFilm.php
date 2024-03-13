@@ -1,34 +1,37 @@
 <?php ob_start();
+
+$film = $requeteInfosFilm->fetch();
+
 ?>
 
-<h1>Ajout film</h1>
+<h1>Modification film</h1>
 
 
 <div>
-    <p>Ajouter un film</p>
-    <form action="index.php?action=ajoutFilm" method="post">
+    <p>Modifier un film</p>
+    <form action="index.php?action=modificationFilm&id=<?= $id ?>" method="post">
         <p>
             <label>
                 Titre :
-                <input type="text" name="film_titre" value="">
+                <input type="text" name="film_titre" value="<?=$film["film_titre"]?>">
             </label>
         </p>
         <p>
             <label>
                 Note :
-                <input type="number" name="film_note" min="0" value="">
+                <input type="number" name="film_note" min="0" value="<?=$film["film_note"]?>">
             </label>
         </p>
         <p>
             <label>
                 Durée en minutes :
-                <input type="number" name="film_duree" value="">
+                <input type="number" name="film_duree" value="<?=$film["film_duree"]?>">
             </label>
         </p>
         <p>
             <label>
                 Date de sortie :
-                <input type="date" name="film_date_sortie" value="">
+                <input type="date" name="film_date_sortie" value="<?=$film["film_date_sortie"]?>">
             </label>
         </p>
         <p>
@@ -40,7 +43,7 @@
         </p>
         <p>
                 <label> Résumé : </label>
-                <textarea id="synopsis" name="film_synopsis" rows="5" cols="33" value=""></textarea>
+                <textarea id="synopsis" name="film_synopsis" rows="5" cols="33" value=""><?=$film["film_synopsis"]?></textarea>
         </p>
         <p>
             <label for="realisateur-choix">Réalisateur</label>
@@ -53,16 +56,16 @@
         </p>
         <p>
             <label for="film_affiche">Affiche :</label>
-            <input type="text" name="film_affiche" value="" />
+            <input type="text" name="film_affiche" value="<?=$film["film_affiche"]?>" />
         </p>
         <p>
             <label>
-                <input type="submit" name="submit" value="Ajouter">
+                <input type="submit" name="submit" value="Modifier">
             </label>
         </p>
     </form>
 
-    
+  
 </div>
 
 
@@ -71,7 +74,7 @@
 
 <?php
 
-$titrePage = "Ajout film";
+$titrePage = "Modification film";
 $titreSecond = "";
 $content = ob_get_clean();
 require "view/template.php";

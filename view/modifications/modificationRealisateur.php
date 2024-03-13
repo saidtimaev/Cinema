@@ -2,15 +2,21 @@
 
 <?php $personne = $requetePersonne->fetch() ?>
 
-<h1>Modification personne</h1>
+<p>Attention! Tous ces films seront affectés :</p>
+
+<?php foreach($requeteListeFilmsRealisateur as $filmsActeur){ ?>
+    <li><?= $filmsActeur["film_titre"]?></li>
+<?php } ?>
+
+<h1>Modification realisateur</h1>
 
 <div>
-    <p>Modifier une personne</p>
+    <p>Modifier un réalisateur</p>
     <form action="index.php?action=modificationPersonne&id=<?= $id ?>" method="post">
         <p>
             <label>
                 Prénom :
-                <input type="text" name="personne_prenom " value="<?= $personne["personne_prenom"] ?>">
+                <input type="text" name="personne_prenom" value="<?= $personne["personne_prenom"] ?>">
             </label>
         </p>
         <p>
@@ -56,7 +62,7 @@
 
 <?php
 
-$titrePage = "Modification personne";
+$titrePage = "Modification réalisateur";
 $titreSecond = "";
 $content = ob_get_clean();
 require "view/template.php";
