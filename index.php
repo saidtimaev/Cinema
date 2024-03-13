@@ -63,6 +63,7 @@ if(isset($_GET["action"])){
         // SUPPRESSIONS
         case "suppressionFilm" : $ctrlCinema->suppressionFilm($id); break;
         case "suppressionCasting" : $ctrlCinema->suppressionCasting($idFilm, $idRole, $idActeur); break;
+        case "suppressionActeur" : $ctrlCinema->suppressionActeur($id); break;
         
 
 

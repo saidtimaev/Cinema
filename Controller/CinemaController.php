@@ -1021,6 +1021,34 @@ class CinemaController{
     
         header("Location:index.php?action=modificationFilmAffichage&id=$idFilm");die;
     }
+
+    public function suppressionActeur($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteRecherchePersonne = $pdo->prepare("
+            SELECT id_personne 
+            FROM acteur 
+            WHERE id_acteur = :id_acteur
+        ");
+
+        $requeteRecherchePersonne->execute([
+            "id_acteur"=>$id
+        ]);
+
+        $requeteSupprimerActeur = $pdo->prepare("
+            DELETE 
+            FROM personne
+            WHERE id_personne = :id_personne
+        ");
+
+        $requeteSupprimerActeur->execute([
+            "id_personne"=>$id
+        ]);
+
+    
+        header("Location:index.php?action=listeActeurs");die;
+    }
 }
 
 

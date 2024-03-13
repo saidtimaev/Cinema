@@ -4,6 +4,7 @@
 ?>
 
 <a href="index.php?action=modificationActeurAffichage&id=<?= $id ?>">Modifier cet acteur</a><br><br>
+<a href="index.php?action=suppressionActeur&id=<?= $id ?>">Supprimer cet acteur</a><br><br>
 
 <h1><?php echo $acteur["personne_prenom"]." ".$acteur["personne_nom"]."<br>"; ?> </h1>
 <p>Date de naissance : <?php echo $acteur["personne_date_naissance"]; ?></p>
