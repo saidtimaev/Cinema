@@ -2,6 +2,18 @@
 
 $film = $requeteInfosFilm->fetch();
 
+$genresFilm =  $requeteRechercheGenresFilm->fetchAll();
+
+$idRealisateurFilm = $requeteRealisateurFilm->fetch();
+
+$genres = [];
+foreach($genresFilm as $genre){
+    $genres[]= $genre['id_genre'];
+}
+
+var_dump($film["film_date_sortie"]);
+
+
 ?>
 
 <h1>Modification film</h1>
@@ -31,13 +43,27 @@ $film = $requeteInfosFilm->fetch();
         <p>
             <label>
                 Date de sortie :
-                <input type="date" name="film_date_sortie" value="<?=$film["film_date_sortie"]?>">
+                <?php
+
+                    // On transforme notre chaîne de caractères en un tableau
+                    $toarray =explode("/",$film["film_date_sortie"]);
+                    // On inverse l'ordre des éléments
+                    $reverse = array_reverse($toarray);
+                    // On assemble une chaîne de caractères à partir d'éléments d'un tableau
+                    $final = implode("-",$reverse);
+
+
+                ?>
+                <input type="date" name="film_date_sortie" value="<?= $final ?>">
             </label>
         </p>
         <p>
             <legend>Genre(s) :</legend>
-            <?php foreach($requeteListeGenres->fetchAll() as $genre){ ?>
-                    <input type="checkbox" id="<?= $genre["id_genre"] ?>" name="genres[]" value="<?= $genre["id_genre"] ?>">
+            <?php foreach($requeteListeGenres->fetchAll() as $genre){ 
+                $genreCheck = (in_array($genre["id_genre"], $genres)) ? "checked" : "";
+                
+                ?>
+                    <input type="checkbox" id="<?= $genre["id_genre"] ?>" name="genres[]" value="<?= $genre["id_genre"] ?>" <?= $genreCheck ?>>
                     <label for="<?= $genre["id_genre"] ?>"><?= $genre["genre_libelle"]?></label><br>
             <?php } ?>
         </p>
@@ -49,8 +75,10 @@ $film = $requeteInfosFilm->fetch();
             <label for="realisateur-choix">Réalisateur</label>
             <select name="id_realisateur" id="realisateur-choix">
                 <option value="">Choix</option>
-                <?php foreach($requeteListeRealisateurs->fetchAll() as $realisateur){ ?>
-                    <option value="<?= $realisateur["id_realisateur"] ?>"><?= $realisateur["personne_prenom"]. " ".$realisateur["personne_nom"] ?></option>
+                <?php foreach($requeteListeRealisateurs->fetchAll() as $realisateur){ 
+                    $realisateurCheck = (in_array($realisateur["id_realisateur"],$idRealisateurFilm)) ? "selected='selected'" : "";
+                    ?>
+                    <option value="<?= $realisateur["id_realisateur"] ?>" <?= $realisateurCheck ?>><?= $realisateur["personne_prenom"]. " ".$realisateur["personne_nom"] ?></option>
                 <?php } ?>
             </select>
         </p>

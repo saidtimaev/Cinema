@@ -863,7 +863,28 @@ class CinemaController{
         FROM realisateur
         INNER JOIN personne ON realisateur.id_personne = personne.id_personne
         ORDER BY personne_nom
-    ");
+        ");
+
+        $requeteRechercheGenresFilm = $pdo->prepare("
+            SELECT id_genre
+            FROM genre_film
+            WHERE id_film = :id_film
+        ");
+
+        $requeteRechercheGenresFilm->execute([
+            "id_film"=>$id
+        ]);
+
+        $requeteRealisateurFilm = $pdo->prepare("
+                SELECT id_realisateur
+                FROM film
+                WHERE id_film = :id_film
+            ");
+
+        $requeteRealisateurFilm->execute([
+            "id_film"=>$id
+        ]);
+        
 
     require "view/modifications/modificationFilm.php";
 
@@ -914,12 +935,7 @@ class CinemaController{
                 ORDER BY genre_libelle
             ");
     
-            $requeteListeRealisateurs = $pdo->query("
-                SELECT id_realisateur, personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
-                FROM realisateur
-                INNER JOIN personne ON realisateur.id_personne = personne.id_personne
-                ORDER BY personne_nom
-            ");
+            
 
       
             $requeteSuppressionGenresFilm = $pdo->prepare("
@@ -949,6 +965,8 @@ class CinemaController{
           
         }
 
+
+        // require "view/modifications/modificationFilm.php";
         header("Location:index.php?action=modificationFilmAffichage&id=$id");
     
 
