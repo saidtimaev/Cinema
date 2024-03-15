@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th>Rôle</th>
+            <th>supprimer</th>
         </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
             foreach($requete->fetchAll() as $role){ ?>
                 <tr>
                     <td><a href="index.php?id=<?= $role["id_role"] ?>&action=infosRole"><?= $role["role_nom"] ?></a></td>
+                    <td><a href="index.php?id=<?= $role["id_role"] ?>&action=supprimerRole">X</a></td>
                 </tr>
                 </tr>
             <?php } ?>

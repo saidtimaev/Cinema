@@ -127,4 +127,22 @@ class RoleController {
 
         header("Location:index.php?action=modificationRoleAffichage&id=".$id);
     }
+
+    public function supprimerRole($id){
+
+
+        $pdo = Connect::seConnecter();
+
+        $requeteSupprimerRole = $pdo->prepare("
+            DELETE 
+            FROM role
+            WHERE id_role = :id_role
+        ");
+
+        $requeteSupprimerRole->execute([
+            "id_role"=>$id
+        ]);
+
+        header("Location:index.php?action=listeRoles");die;
+    }
 }

@@ -16,6 +16,8 @@
 
 
 <a href="index.php?action=modificationRoleAffichage&id=<?= $role["id_role"] ?>">Modifier ce rôle</a><br><br>
+<a href="index.php?id=<?= $role["id_role"] ?>&action=supprimerRole">Supprimer ce rôle</a>
+
 
 <table>
     <thead>

@@ -82,6 +82,7 @@ if(isset($_GET["action"])){
         case "supprimerActeur" : $ctrlActeur->supprimerActeur($id); break;
         case "supprimerRealisateur" : $ctrlRealisateur->supprimerRealisateur($id); break;
         case "supprimerGenre" : $ctrlGenre->supprimerGenre($id); break;
+        case "supprimerRole" : $ctrlRole->supprimerRole($id); break;
         
 
 

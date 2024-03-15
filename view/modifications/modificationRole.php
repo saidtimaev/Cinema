@@ -7,7 +7,7 @@ $nomRole = $requeteNomRole->fetch(); ?>
 
 <div>
     <p>Modifier un rôle</p>
-    <form action="index.php?action=modificationRole&id=<?= $nomRole["id_role"] ?>" method="post">
+    <form action="index.php?action=modificationRole&id=<?= $id ?>" method="post">
         <p>
             <label>
                 Nom du rôle :
