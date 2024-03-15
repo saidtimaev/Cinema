@@ -3,6 +3,7 @@
 <?php
 
 use Controller\CinemaController;
+use Controller\FilmController;
 
 
 spl_autoload_register(function ($class_name){
@@ -10,6 +11,7 @@ spl_autoload_register(function ($class_name){
 });
 
 $ctrlCinema = new CinemaController();
+$ctrlFilm = new FilmController();
 
 $id = (isset($_GET['id'])) ? filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 $idFilm = (isset($_GET['id_film'])) ? filter_var($_GET['id_film'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
@@ -24,7 +26,7 @@ if(isset($_GET["action"])){
     switch ($_GET["action"]){
         // LISTES
 
-        case "listeFilms" : $ctrlCinema->listeFilms(); break;
+        case "listeFilms" : $ctrlFilm->listeFilms(); break;
         case "listeActeurs" : $ctrlCinema->listeActeurs(); break;
         case "listeRealisateurs" : $ctrlCinema->listeRealisateurs(); break;
         case "listeGenres" : $ctrlCinema->listeGenres(); break;
@@ -32,7 +34,7 @@ if(isset($_GET["action"])){
         case "listeCastings" : $ctrlCinema->listeCastings(); break;
 
         // INFOS
-        case "infosFilm" : $ctrlCinema->infosFilm($id); break;
+        case "infosFilm" : $ctrlFilm->infosFilm($id); break;
         case "infosActeur" : $ctrlCinema->infosActeur($id); break;
         case "infosRealisateur" : $ctrlCinema->infosRealisateur($id); break;
         case "infosGenre" : $ctrlCinema->infosGenre($id); break;
