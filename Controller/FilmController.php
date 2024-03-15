@@ -320,7 +320,7 @@ class FilmController {
     }
 
     
-    public function suppressionFilm($id){
+    public function supprimerFilm($id){
         
         $pdo = Connect::seConnecter();
 

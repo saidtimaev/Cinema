@@ -12,7 +12,7 @@
 
 <div>
     <p>Modifier un réalisateur</p>
-    <form action="index.php?action=modificationPersonne&id=<?= $id ?>" method="post">
+    <form action="index.php?action=modificationRealisateur&id=<?= $personne["id_personne"] ?>" method="post">
         <p>
             <label>
                 Prénom :

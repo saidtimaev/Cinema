@@ -1,6 +1,8 @@
 <?php ob_start(); ?>
 
-<?php $personne = $requetePersonne->fetch() ?>
+<?php $personne = $requetePersonne->fetch() 
+    
+?>
 
 <p>Attention! Tous ces castings seront affectés :</p>
 
@@ -8,11 +10,11 @@
     <li><?= $castingActeur["role_nom"]?> dans <?= $castingActeur["film_titre"] ?></li>
 <?php } ?>
 
-<h1>Modification personne</h1>
+<h1>Modification acteur/actrice</h1>
 
 <div>
-    <p>Modifier une personne</p>
-    <form action="index.php?action=modificationPersonne&id=<?= $id ?>" method="post">
+    <p>Modifier un(e) acteur/actrice</p>
+    <form action="index.php?action=modificationActeur&id=<?= $personne["id_personne"] ?>" method="post">
         <p>
             <label>
                 Prénom :

@@ -5,6 +5,7 @@
 <h1><?php echo $genre["genre_libelle"]."<br>"; ?> </h1>
 
 <a href="index.php?action=modificationGenreAffichage&id=<?= $id ?>">Modifier ce genre</a><br><br>
+<a href="index.php?id=<?= $genre["id_genre"] ?>&action=supprimerGenre">Supprimer ce genre</a>
 
    
 

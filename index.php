@@ -69,16 +69,19 @@ if(isset($_GET["action"])){
         case "modificationRoleAffichage" : $ctrlRole->modificationRoleAffichage($id); break;
         case "modificationGenre" : $ctrlGenre->modificationGenre($id); break;
         case "modificationGenreAffichage" : $ctrlGenre->modificationGenreAffichage($id); break;
-        case "modificationActeur" : $ctrlActeur->modificationPersonne($id); break;
+        case "modificationActeur" : $ctrlActeur->modificationActeur($id); break;
         case "modificationActeurAffichage" : $ctrlActeur->modificationActeurAffichage($id); break;
+        case "modificationRealisateur" : $ctrlRealisateur->modificationRealisateur($id); break;
+        case "modificationRealisateurAffichage" : $ctrlRealisateur->modificationRealisateurAffichage($id); break;
         case "modificationFilm" : $ctrlFilm->modificationFilm($id); break;
         case "modificationFilmAffichage" : $ctrlFilm->modificationFilmAffichage($id); break;
 
         // SUPPRESSIONS
-        case "suppressionFilm" : $ctrlFilm->suppressionFilm($id); break;
-        case "suppressionCasting" : $ctrlCasting->suppressionCasting($idFilm, $idRole, $idActeur); break;
-        case "suppressionActeur" : $ctrlActeur->suppressionActeur($id); break;
-        case "suppressionRealisateur" : $ctrlRealisateur->suppressionRealisateur($id); break;
+        case "supprimerFilm" : $ctrlFilm->supprimerFilm($id); break;
+        case "supprimerCasting" : $ctrlCasting->supprimerCasting($idFilm, $idRole, $idActeur); break;
+        case "supprimerActeur" : $ctrlActeur->supprimerActeur($id); break;
+        case "supprimerRealisateur" : $ctrlRealisateur->supprimerRealisateur($id); break;
+        case "supprimerGenre" : $ctrlGenre->supprimerGenre($id); break;
         
 
 

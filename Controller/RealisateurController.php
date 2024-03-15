@@ -25,7 +25,7 @@ class RealisateurController {
         $pdo = Connect::seConnecter();
 
         $requeteInfosRealisateur = $pdo->prepare("
-        SELECT personne_prenom, personne_nom, personne_sexe, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance
+        SELECT realisateur.id_realisateur, personne_prenom, personne_nom, personne_sexe, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance
         FROM personne
         INNER JOIN realisateur ON realisateur.id_personne = personne.id_personne
         WHERE realisateur.id_realisateur = :id
@@ -51,13 +51,14 @@ class RealisateurController {
         $pdo = Connect::seConnecter();
 
         $requetePersonne = $pdo->prepare("
-                       SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance
+                       SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance, personne.id_personne
                        FROM personne
-                        WHERE id_personne = :id_personne
+                       INNER JOIN realisateur ON realisateur.id_personne = personne.id_personne
+                        WHERE id_realisateur = :id_realisateur
                     ");
 
                     $requetePersonne->execute([
-                        "id_personne"=>$id
+                        "id_realisateur"=>$id
                     ]);
 
 
@@ -77,7 +78,7 @@ class RealisateurController {
         require "view/modifications/modificationRealisateur.php";
     }
 
-    public function suppressionRealisateur($id){
+    public function supprimerRealisateur($id){
 
         $pdo = Connect::seConnecter();
 
@@ -93,5 +94,146 @@ class RealisateurController {
 
 
         header("Location:index.php?action=listeRealisateurs");die;
+    }
+
+    public function modificationRealisateur($id){
+        
+
+        if(isset($_POST['submit'])){
+
+        // On crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
+        $personnePrenom = filter_input(INPUT_POST, "personne_prenom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $personneNom = filter_input(INPUT_POST, "personne_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $personneSexe = filter_input(INPUT_POST, "personne_sexe",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $personneDateNaissance = new \DateTime(filter_input(INPUT_POST, "personne_date_naissance",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        
+        $pdo = Connect::seConnecter();
+
+        // var_dump($_POST);
+
+        
+            
+            $requeteModificationPersonne = $pdo->prepare("
+                UPDATE personne 
+                SET personne_prenom = :personne_prenom, personne_nom = :personne_nom, personne_sexe =:personne_sexe, personne_date_naissance = :personne_date_naissance 
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteModificationPersonne->execute([
+                "personne_prenom"=> $personnePrenom,
+                "personne_nom"=> $personneNom,
+                "personne_sexe"=> $personneSexe,
+                "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d'),
+                "id_personne"=>$id
+            ]);
+
+            
+        
+
+        // Si la personne est un acteur et un réalisateur
+        if ($_POST["professions"] == "both"){
+
+            $requeteSuppressionRoleActeur = $pdo->prepare("
+                DELETE FROM acteur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            $requeteSuppressionRoleRealisateur = $pdo->prepare("
+                DELETE FROM realisateur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleRealisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier acteur
+            $requeteAjoutActeur = $pdo->prepare("
+                INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier réalisateur
+            $requeteAjoutRéalisateur = $pdo->prepare("
+                INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutRéalisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+        } 
+        
+        if ($_POST["professions"] == "acteur"){
+
+            $requeteSuppressionRoleActeur = $pdo->prepare("
+                DELETE FROM acteur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            $requeteSuppressionRoleRealisateur = $pdo->prepare("
+                DELETE FROM realisateur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleRealisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier acteur
+            $requeteAjoutActeur = $pdo->prepare("
+                INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+        } 
+        
+        if ($_POST["professions"] == "realisateur") {
+
+            $requeteSuppressionRoleActeur = $pdo->prepare("
+                DELETE FROM acteur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            $requeteSuppressionRoleRealisateur = $pdo->prepare("
+                DELETE FROM realisateur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleRealisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier réalisateur
+            $requeteAjoutRéalisateur = $pdo->prepare("
+                INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutRéalisateur->execute([
+                "id_personne"=>$id
+            ]);
+        }
+
+        header("Location:index.php?action=listeRealisateurs");die;
+        // require "view/modifications/modificationPersonne.php";
+        }     
     }
 }

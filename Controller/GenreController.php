@@ -24,7 +24,7 @@ class GenreController {
         $pdo = Connect::seConnecter();
 
         $requeteInfosGenre = $pdo->prepare("
-        SELECT genre_libelle
+        SELECT genre_libelle, id_genre
         from genre
         WHERE id_genre = :id
         ");
@@ -65,7 +65,7 @@ class GenreController {
                
             }
         }   
-        var_dump($genre);
+        // var_dump($genre);
         $pdo = Connect::seConnecter();
 
         $requeteAjoutGenre = $pdo->prepare("
@@ -121,4 +121,22 @@ class GenreController {
         header("Location:index.php?action=modificationGenreAffichage&id=".$id);
 
     }   
+
+    public function supprimerGenre($id){
+
+
+        $pdo = Connect::seConnecter();
+
+        $requeteSupprimerGenre = $pdo->prepare("
+            DELETE 
+            FROM genre
+            WHERE id_genre = :id_genre
+        ");
+
+        $requeteSupprimerGenre->execute([
+            "id_genre"=>$id
+        ]);
+
+        header("Location:index.php?action=listeGenres");die;
+    }
 }

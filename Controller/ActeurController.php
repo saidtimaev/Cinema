@@ -24,15 +24,6 @@ class ActeurController {
 
         $pdo = Connect::seConnecter();
 
-        $requeteRecherchePersonne = $pdo->prepare("
-            SELECT id_personne 
-            FROM acteur 
-            WHERE id_acteur = :id_acteur
-        ");
-
-        $requeteRecherchePersonne->execute([
-            "id_acteur"=>$id
-        ]);
 
         $requeteInfosActeur = $pdo->prepare("
         SELECT personne_prenom, personne_nom, personne_sexe, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance
@@ -65,13 +56,14 @@ class ActeurController {
         $pdo = Connect::seConnecter();
 
         $requetePersonne = $pdo->prepare("
-                       SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance
+                       SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance, personne.id_personne
                        FROM personne
-                        WHERE id_personne = :id_personne
+                       INNER JOIN acteur ON acteur.id_personne = personne.id_personne
+                        WHERE id_acteur = :id_acteur
                     ");
 
                     $requetePersonne->execute([
-                        "id_personne"=>$id
+                        "id_acteur"=>$id
                     ]);
 
         $requeteListeCastingsActeur = $pdo->prepare("
@@ -92,7 +84,7 @@ class ActeurController {
         require "view/modifications/modificationActeur.php";
     }
 
-    public function suppressionActeur($id){
+    public function supprimerActeur($id){
 
         $pdo = Connect::seConnecter();
 
@@ -108,5 +100,147 @@ class ActeurController {
 
 
         header("Location:index.php?action=listeActeurs");die;
+    }
+
+
+    public function modificationActeur($id){
+        
+
+        if(isset($_POST['submit'])){
+
+        // On crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
+        $personnePrenom = filter_input(INPUT_POST, "personne_prenom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $personneNom = filter_input(INPUT_POST, "personne_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $personneSexe = filter_input(INPUT_POST, "personne_sexe",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $personneDateNaissance = new \DateTime(filter_input(INPUT_POST, "personne_date_naissance",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        
+        $pdo = Connect::seConnecter();
+
+        // var_dump($_POST);
+
+        
+            
+            $requeteModificationPersonne = $pdo->prepare("
+                UPDATE personne 
+                SET personne_prenom = :personne_prenom, personne_nom = :personne_nom, personne_sexe =:personne_sexe, personne_date_naissance = :personne_date_naissance 
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteModificationPersonne->execute([
+                "personne_prenom"=> $personnePrenom,
+                "personne_nom"=> $personneNom,
+                "personne_sexe"=> $personneSexe,
+                "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d'),
+                "id_personne"=>$id
+            ]);
+
+            
+        
+
+        // Si la personne est un acteur et un réalisateur
+        if ($_POST["professions"] == "both"){
+
+            $requeteSuppressionRoleActeur = $pdo->prepare("
+                DELETE FROM acteur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            $requeteSuppressionRoleRealisateur = $pdo->prepare("
+                DELETE FROM realisateur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleRealisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier acteur
+            $requeteAjoutActeur = $pdo->prepare("
+                INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier réalisateur
+            $requeteAjoutRéalisateur = $pdo->prepare("
+                INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutRéalisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+        } 
+        
+        if ($_POST["professions"] == "acteur"){
+
+            $requeteSuppressionRoleActeur = $pdo->prepare("
+                DELETE FROM acteur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            $requeteSuppressionRoleRealisateur = $pdo->prepare("
+                DELETE FROM realisateur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleRealisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier acteur
+            $requeteAjoutActeur = $pdo->prepare("
+                INSERT INTO acteur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+        } 
+        
+        if ($_POST["professions"] == "realisateur") {
+
+            $requeteSuppressionRoleActeur = $pdo->prepare("
+                DELETE FROM acteur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleActeur->execute([
+                "id_personne"=>$id
+            ]);
+
+            $requeteSuppressionRoleRealisateur = $pdo->prepare("
+                DELETE FROM realisateur
+                WHERE id_personne = :id_personne
+            ");
+
+            $requeteSuppressionRoleRealisateur->execute([
+                "id_personne"=>$id
+            ]);
+
+            // On lui attribue le métier réalisateur
+            $requeteAjoutRéalisateur = $pdo->prepare("
+                INSERT INTO realisateur (id_personne) VALUES (:id_personne) 
+            ");
+
+            $requeteAjoutRéalisateur->execute([
+                "id_personne"=>$id
+            ]);
+        }
+
+        header("Location:index.php?action=listeActeurs");die;
+        // require "view/modifications/modificationPersonne.php";
+        }     
     }
 }
