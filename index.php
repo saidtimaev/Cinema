@@ -4,6 +4,12 @@
 
 use Controller\CinemaController;
 use Controller\FilmController;
+use Controller\ActeurController;
+use Controller\RealisateurController;
+use Controller\PersonneController;
+use Controller\GenreController;
+use Controller\RoleController;
+use Controller\CastingController;
 
 
 spl_autoload_register(function ($class_name){
@@ -12,6 +18,12 @@ spl_autoload_register(function ($class_name){
 
 $ctrlCinema = new CinemaController();
 $ctrlFilm = new FilmController();
+$ctrlActeur = new ActeurController();
+$ctrlRealisateur = new RealisateurController();
+$ctrlPersonne = new PersonneController();
+$ctrlGenre = new GenreController();
+$ctrlRole = new RoleController();
+$ctrlCasting = new CastingController();
 
 $id = (isset($_GET['id'])) ? filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 $idFilm = (isset($_GET['id_film'])) ? filter_var($_GET['id_film'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
@@ -27,45 +39,46 @@ if(isset($_GET["action"])){
         // LISTES
 
         case "listeFilms" : $ctrlFilm->listeFilms(); break;
-        case "listeActeurs" : $ctrlCinema->listeActeurs(); break;
-        case "listeRealisateurs" : $ctrlCinema->listeRealisateurs(); break;
-        case "listeGenres" : $ctrlCinema->listeGenres(); break;
-        case "listeRoles" : $ctrlCinema->listeRoles(); break;
-        case "listeCastings" : $ctrlCinema->listeCastings(); break;
+        case "listeActeurs" : $ctrlActeur->listeActeurs(); break;
+        case "listeRealisateurs" : $ctrlRealisateur->listeRealisateurs(); break;
+        case "listeGenres" : $ctrlGenre->listeGenres(); break;
+        case "listeRoles" : $ctrlRole->listeRoles(); break;
+        case "listeCastings" : $ctrlCasting->listeCastings(); break;
 
         // INFOS
         case "infosFilm" : $ctrlFilm->infosFilm($id); break;
-        case "infosActeur" : $ctrlCinema->infosActeur($id); break;
-        case "infosRealisateur" : $ctrlCinema->infosRealisateur($id); break;
-        case "infosGenre" : $ctrlCinema->infosGenre($id); break;
-        case "infosRole" : $ctrlCinema->infosRole($id); break;
+        case "infosActeur" : $ctrlActeur->infosActeur($id); break;
+        case "infosRealisateur" : $ctrlRealisateur->infosRealisateur($id); break;
+        case "infosGenre" : $ctrlGenre->infosGenre($id); break;
+        case "infosRole" : $ctrlRole->infosRole($id); break;
 
         // AJOUTS
-        case "ajoutGenre" : $ctrlCinema->ajoutGenre(); break;
-        case "ajoutGenreAffichage" : $ctrlCinema->ajoutGenreAffichage(); break;
-        case "ajoutRole" : $ctrlCinema->ajoutRole(); break;
-        case "ajoutRoleAffichage" : $ctrlCinema->ajoutRoleAffichage(); break;
-        case "ajoutPersonne" : $ctrlCinema->ajoutPersonne(); break;
-        case "ajoutPersonneAffichage" : $ctrlCinema->ajoutPersonneAffichage(); break;
-        case "ajoutFilm" : $ctrlCinema->ajoutFilm(); break;
-        case "ajoutFilmAffichage" : $ctrlCinema->ajoutFilmAffichage(); break;
-        case "ajoutCasting" : $ctrlCinema->ajoutCasting(); break;
-        case "ajoutCastingAffichage" : $ctrlCinema->ajoutCastingAffichage(); break;
+        case "ajoutGenre" : $ctrlGenre->ajoutGenre(); break;
+        case "ajoutGenreAffichage" : $ctrlGenre->ajoutGenreAffichage(); break;
+        case "ajoutRole" : $ctrlRole->ajoutRole(); break;
+        case "ajoutRoleAffichage" : $ctrlRole->ajoutRoleAffichage(); break;
+        case "ajoutPersonne" : $ctrlPersonne->ajoutPersonne(); break;
+        case "ajoutPersonneAffichage" : $ctrlPersonne->ajoutPersonneAffichage(); break;
+        case "ajoutFilm" : $ctrlFilm->ajoutFilm(); break;
+        case "ajoutFilmAffichage" : $ctrlFilm->ajoutFilmAffichage(); break;
+        case "ajoutCasting" : $ctrlCasting->ajoutCasting(); break;
+        case "ajoutCastingAffichage" : $ctrlCasting->ajoutCastingAffichage(); break;
 
         // MODIFICATIONS
-        case "modificationRole" : $ctrlCinema->modificationRole($id); break;
-        case "modificationRoleAffichage" : $ctrlCinema->modificationRoleAffichage($id); break;
-        case "modificationGenre" : $ctrlCinema->modificationGenre($id); break;
-        case "modificationGenreAffichage" : $ctrlCinema->modificationGenreAffichage($id); break;
-        case "modificationActeur" : $ctrlCinema->modificationPersonne($id); break;
-        case "modificationActeurAffichage" : $ctrlCinema->modificationActeurAffichage($id); break;
-        case "modificationFilm" : $ctrlCinema->modificationFilm($id); break;
-        case "modificationFilmAffichage" : $ctrlCinema->modificationFilmAffichage($id); break;
+        case "modificationRole" : $ctrlRole->modificationRole($id); break;
+        case "modificationRoleAffichage" : $ctrlRole->modificationRoleAffichage($id); break;
+        case "modificationGenre" : $ctrlGenre->modificationGenre($id); break;
+        case "modificationGenreAffichage" : $ctrlGenre->modificationGenreAffichage($id); break;
+        case "modificationActeur" : $ctrlActeur->modificationPersonne($id); break;
+        case "modificationActeurAffichage" : $ctrlActeur->modificationActeurAffichage($id); break;
+        case "modificationFilm" : $ctrlFilm->modificationFilm($id); break;
+        case "modificationFilmAffichage" : $ctrlFilm->modificationFilmAffichage($id); break;
 
         // SUPPRESSIONS
-        case "suppressionFilm" : $ctrlCinema->suppressionFilm($id); break;
-        case "suppressionCasting" : $ctrlCinema->suppressionCasting($idFilm, $idRole, $idActeur); break;
-        case "suppressionActeur" : $ctrlCinema->suppressionActeur($id); break;
+        case "suppressionFilm" : $ctrlFilm->suppressionFilm($id); break;
+        case "suppressionCasting" : $ctrlCasting->suppressionCasting($idFilm, $idRole, $idActeur); break;
+        case "suppressionActeur" : $ctrlActeur->suppressionActeur($id); break;
+        case "suppressionRealisateur" : $ctrlRealisateur->suppressionRealisateur($id); break;
         
 
 

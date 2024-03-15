@@ -36,14 +36,23 @@ class FilmController {
         // $pdo = Connect::seConnecter();
 
         $requeteInfosFilm = $this->pdo->prepare("
-            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, film_duree, film_note, film_synopsis, personne_nom, personne_prenom
+            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, film_duree, film_note, film_synopsis
             FROM film 
-            INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-            INNER JOIN personne ON personne.id_personne = realisateur.id_personne
             WHERE id_film = :id
         ");
 
         $requeteInfosFilm->execute(["id"=>$id]);
+
+        
+        $requeteInfosRealisateurFilm = $this->pdo->prepare("
+            SELECT CONCAT(personne_prenom, ' ', personne_nom) AS realisateurFilm
+            FROM film 
+            LEFT JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+            LEFT JOIN personne ON personne.id_personne = realisateur.id_personne
+            WHERE id_film = :id
+        ");
+
+        $requeteInfosRealisateurFilm->execute(["id"=>$id]);
 
         
         $requeteActeursRoles = $this->pdo->prepare("
@@ -160,14 +169,23 @@ class FilmController {
         $pdo = Connect::seConnecter();
 
         $requeteInfosFilm = $pdo->prepare("
-            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, film_duree, film_note, film_synopsis, personne_nom, personne_prenom, film_affiche
+            SELECT film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, film_duree, film_note, film_synopsis, film_affiche
             FROM film 
-            INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-            INNER JOIN personne ON personne.id_personne = realisateur.id_personne
             WHERE id_film = :id
         ");
 
         $requeteInfosFilm->execute(["id"=>$id]);
+
+        
+        $requeteInfosRealisateurFilm = $pdo->prepare("
+            SELECT CONCAT(personne_prenom, ' ', personne_nom) AS realisateurFilm
+            FROM film 
+            LEFT JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+            LEFT JOIN personne ON personne.id_personne = realisateur.id_personne
+            WHERE id_film = :id
+        ");
+
+        $requeteInfosRealisateurFilm->execute(["id"=>$id]);
 
         $requeteListeGenres = $pdo->query("
             SELECT genre_libelle, id_genre

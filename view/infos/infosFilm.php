@@ -1,6 +1,10 @@
 <?php ob_start(); ?>
 
-<?php $film = $requeteInfosFilm->fetch();  
+<?php $film = $requeteInfosFilm->fetch();
+// var_dump($film);  
+    $realisateur = $requeteInfosRealisateurFilm->fetch();
+    // var_dump($realisateur);die;
+   
 ?>
 
 <a href="index.php?action=modificationFilmAffichage&id=<?= $id ?>">Modifier ce film</a><br><br>
@@ -12,10 +16,7 @@
 <p>Durée : <?php echo $film["film_duree"]; ?> min</p>
 <p>Note : <?php echo $film["film_note"]; ?></p>
 <p>Resumé : <br><?php echo $film["film_synopsis"]; ?></p>
-<p>Réalisateur : <?php echo $film["personne_prenom"]." ".$film["personne_nom"]; ?></p>
-
-
-   
+<p>Réalisateur : <?= $realisateur['realisateurFilm']?? "Pas de réalisateur" ?></p>
 
 
 <p>Liste des rôles et des acteurs :</p>
