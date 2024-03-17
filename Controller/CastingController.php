@@ -98,7 +98,7 @@ class CastingController {
         require "view/ajouts/ajoutCasting.php";
     }
 
-    public function suppressionCasting($idFilm, $idRole, $idActeur){
+    public function supprimerCasting($idFilm, $idRole, $idActeur){
         // var_dump($_GET);die;
         $pdo = Connect::seConnecter();
 
