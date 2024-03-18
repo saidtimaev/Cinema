@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="public/css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title><?= $titrePage ?></title>
     </head>
     <div id="wrapper">
@@ -48,10 +49,12 @@
                         <nav>
                             <div class="footer-nav-list">
                                 <ul>
-                                    <li><a href="">Facebook</a></li>
-                                    <li><a href="">Youtube</a></li>
-                                    <li><a href="">Twitter</a></li>
-                                    <li><a href="">Instagram</a></li>
+                                    <div class="reseaux">
+                                        <li><a href=""><i class="fa-brands fa-facebook-f"></i></a></li>
+                                        <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
+                                        <li><a href=""><i class="fa-brands fa-x-twitter"></i></a></li>
+                                        <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
+                                    </div>
                                     <li><a href="">A propos</a></li>
                                     <li><a href="">Nous contacter</a></li>
                                     <li><a href="">CGU</a></li>

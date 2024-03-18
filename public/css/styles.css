@@ -38,6 +38,12 @@ header{
 
 /* SECTION DERNIERES SORTIES */
 
+.genre-libelle,
+.acteur,
+.realisateur{
+    font-weight: bold;
+}
+
 .dernieres-sorties,
 .genres,
 .acteurs,
@@ -107,6 +113,30 @@ header{
 .note-film{
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+/* FOOTER */
+
+/* FOOTER NAV */
+
+.footer-nav{
+    background-color: var(--first-color);
+    color: white;
+}
+
+.footer-nav a{
+    text-decoration: none;
+    color: white;
+}
+
+.reseaux{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.reseaux li{
+    display: inline;
 }
 
 
