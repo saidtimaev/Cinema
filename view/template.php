@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="public/css/styles.css">
+        <link rel="stylesheet" href="public/css/mobile.css">
         <title><?= $titrePage ?></title>
     </head>
     <div id="wrapper">
@@ -15,12 +16,14 @@
                 </img>
                 <nav>
                     <ul>
+                        <li><a href="index.php?action=pageAccueil">Accueil</a></li>
                         <li><a href="index.php?action=listeFilms">Films</a></li>
                         <li><a href="index.php?action=listeActeurs">Acteurs</a></li>
                         <li><a href="index.php?action=listeRealisateurs">Realisateurs</a></li>
                         <li><a href="index.php?action=listeGenres">Genres</a></li>
                         <li><a href="index.php?action=listeRoles">Rôles</a></li>
                         <li><a href="index.php?action=listeCastings">Castings</a></li>
+                        
                     </ul>
                 </nav>
                 <div class="recherche">
@@ -31,7 +34,7 @@
                 </div>
             </header>
             <main>
-                <h2><?= $titreSecond ?></h2>
+               
                 <?= $content ?>
             </main>
             <footer>

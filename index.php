@@ -1,5 +1,3 @@
-
-
 <?php
 
 use Controller\CinemaController;
@@ -15,7 +13,7 @@ spl_autoload_register(function ($class_name){
     require str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . '.php';
 });
 
-// $ctrlCinema = new CinemaController();
+$ctrlCinema = new CinemaController();
 $ctrlFilm = new FilmController();
 $ctrlActeur = new ActeurController();
 $ctrlRealisateur = new RealisateurController();
@@ -28,6 +26,8 @@ $id = (isset($_GET['id'])) ? filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIA
 $idFilm = (isset($_GET['id_film'])) ? filter_var($_GET['id_film'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 $idRole = (isset($_GET['id_role'])) ? filter_var($_GET['id_role'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 $idActeur = (isset($_GET['id_acteur'])) ? filter_var($_GET['id_acteur'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
+
+
 
 if(isset($_GET["action"])){
 
@@ -83,6 +83,9 @@ if(isset($_GET["action"])){
         case "supprimerGenre" : $ctrlGenre->supprimerGenre($id); break;
         case "supprimerRole" : $ctrlRole->supprimerRole($id); break;
         
+        // PAGE ACCUEIL
+
+        case "pageAccueil" : $ctrlCinema->pageAccueil(); break;
 
 
 
@@ -90,5 +93,8 @@ if(isset($_GET["action"])){
         // Faille XSS
         
 
-    }
+    } 
+} else {
+
+        $ctrlCinema->pageAccueil();
 }

@@ -15,6 +15,12 @@
         </p>
         <p>
             <label>
+                Image du genre :
+                <input type="text" name="genre_affiche" value="<?= $genre["genre_affiche"] ?>">
+            </label>
+        </p>
+        <p>
+            <label>
                 <input type="submit" name="submit" value="Modifier">
             </label>
         </p>

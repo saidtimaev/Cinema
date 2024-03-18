@@ -49,6 +49,12 @@
         </p>
         <p>
             <label>
+                Photo :
+                <input type="text" name="personne_photo" value="<?= $personne["personne_photo"] ?>">
+            </label>
+        </p>
+        <p>
+            <label>
                 <input type="submit" name="submit" value="Modifier">
             </label>
         </p>

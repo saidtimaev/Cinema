@@ -82,7 +82,7 @@ class GenreController {
         $pdo = Connect::seConnecter();
 
         $requeteGenre = $pdo->prepare("
-            SELECT genre_libelle
+            SELECT genre_libelle, genre_affiche
             FROM genre 
             WHERE id_genre = :id_genre
         ");
@@ -102,17 +102,20 @@ class GenreController {
 
         if(isset($_POST['submit'])){
             $genreLibelle = filter_input(INPUT_POST, "genre_libelle",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+            $genreAffiche = filter_input(INPUT_POST, "genre_affiche",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $pdo = Connect::seConnecter();
+
+            // var_dump($_POST);die;
 
             $requeteGenreLibelle = $pdo->prepare("
                 UPDATE genre    
-                SET genre_libelle = :genre_libelle
+                SET genre_libelle = :genre_libelle, genre_affiche = :genre_affiche
                 WHERE id_genre = :id_genre
             ");
 
             $requeteGenreLibelle->execute([
                 "genre_libelle"=>$genreLibelle,
+                "genre_affiche"=>$genreAffiche,
                 "id_genre"=>$id
             ]);
 

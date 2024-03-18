@@ -56,7 +56,7 @@ class ActeurController {
         $pdo = Connect::seConnecter();
 
         $requetePersonne = $pdo->prepare("
-                       SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance, personne.id_personne
+                       SELECT personne_prenom, personne_nom, personne_sexe, personne_date_naissance, personne.id_personne, personne_photo
                        FROM personne
                        INNER JOIN acteur ON acteur.id_personne = personne.id_personne
                         WHERE id_acteur = :id_acteur
@@ -113,6 +113,7 @@ class ActeurController {
         $personneNom = filter_input(INPUT_POST, "personne_nom",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $personneSexe = filter_input(INPUT_POST, "personne_sexe",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $personneDateNaissance = new \DateTime(filter_input(INPUT_POST, "personne_date_naissance",FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        $personnePhoto = filter_input(INPUT_POST, "personne_photo",FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
         $pdo = Connect::seConnecter();
 
@@ -122,7 +123,7 @@ class ActeurController {
             
             $requeteModificationPersonne = $pdo->prepare("
                 UPDATE personne 
-                SET personne_prenom = :personne_prenom, personne_nom = :personne_nom, personne_sexe =:personne_sexe, personne_date_naissance = :personne_date_naissance 
+                SET personne_prenom = :personne_prenom, personne_nom = :personne_nom, personne_sexe =:personne_sexe, personne_date_naissance = :personne_date_naissance, personne_photo = :personne_photo
                 WHERE id_personne = :id_personne
             ");
 
@@ -131,6 +132,7 @@ class ActeurController {
                 "personne_nom"=> $personneNom,
                 "personne_sexe"=> $personneSexe,
                 "personne_date_naissance"=>$personneDateNaissance->format('Y-m-d'),
+                "personne_photo"=> $personnePhoto,
                 "id_personne"=>$id
             ]);
 
