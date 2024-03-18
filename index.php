@@ -2,7 +2,7 @@
 
 <?php
 
-// use Controller\CinemaController;
+use Controller\CinemaController;
 use Controller\FilmController;
 use Controller\ActeurController;
 use Controller\RealisateurController;
@@ -12,8 +12,7 @@ use Controller\RoleController;
 use Controller\CastingController;
 
 spl_autoload_register(function ($class_name){
-    var_dump($class_name);
-    include $class_name . '.php';
+    require str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . '.php';
 });
 
 // $ctrlCinema = new CinemaController();

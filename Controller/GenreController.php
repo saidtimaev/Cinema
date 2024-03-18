@@ -118,7 +118,7 @@ class GenreController {
 
         }
 
-        header("Location:index.php?action=modificationGenreAffichage&id=".$id);
+        header("Location:index.php?action=modificationGenreAffichage&id=".$id);die;
 
     }   
 

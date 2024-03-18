@@ -125,7 +125,7 @@ class RoleController {
 
         }
 
-        header("Location:index.php?action=modificationRoleAffichage&id=".$id);
+        header("Location:index.php?action=modificationRoleAffichage&id=".$id);die;
     }
 
     public function supprimerRole($id){

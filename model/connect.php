@@ -5,7 +5,7 @@ namespace Model;
 // Une classe abstaite ne peut pas être instanciée
 abstract class Connect {
 
-    const HOST = 'localhost';
+    const HOST = 'db';
     const NAME = 'cinemasaidtimaev';
     const USER = 'root';
     const PASSWORD = '';
