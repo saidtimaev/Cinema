@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-    <section class="presentation">
+    <!-- <section class="presentation">
         <h1 class="titre-section"></h1>
         <p class="description-section">Découvrez notre recherche de films, acteurs, réalisateurs, rôles et plus encore...</p>
         <div class="containerCarousel">
@@ -17,11 +17,12 @@
                     </div>
           
         </div>
-    </section>
+    </section> -->
     <section class="dernieres-sorties">
-        <h1 class="titre-section">Dernières sorties</h1>
-        <p class="description-section">Découvrez les films sortis récemment</p>
-        <button class="b1">Afficher plus</button>
+        <div class="infos-section">
+            <h1 class="titre-section">Dernières sorties</h1>
+            <p class="description-section">Découvrez les films sortis récemment</p>
+        </div>
         <div class="containerCards">
             <?php 
                 foreach($requeteSortiesRecentes->fetchAll() as $film){ ?>
@@ -31,14 +32,17 @@
                         </figure>
                         <p class="titre-film"><?= $film["film_titre"] ?></p>
                         <p class="date-sortie-film"><?= $film["film_date_sortie"] ?></p>
-                        <p class="note-film"><?= $film["film_note"] ?></p>
+                        <p class="note-film">Note : <?= $film["film_note"] ?></p>
                     </div>
             <?php } ?>
         </div>
+        <button class="b1">Afficher plus</button>
     </section>
     <section class="classement-film">
-        <h1 class="titre-section">Classement films</h1>
-        <p class="description-section">Découvrez les films les mieux notés</p>
+        <div class="infos-section">
+            <h1 class="titre-section">Classement films</h1>
+            <p class="description-section">Découvrez les films les mieux notés</p>
+        </div>
         <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
@@ -55,8 +59,10 @@
         </div>
     </section>
     <section class="genres">
-        <h1 class="titre-section">Genres</h1>
-        <p class="description-section">Retrouvez les films par genre</p>
+        <div class="infos-section">
+            <h1 class="titre-section">Genres</h1>
+            <p class="description-section">Retrouvez les films par genre</p>
+        </div>
         <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
@@ -72,8 +78,10 @@
         </div>
     </section>
     <section class="acteurs">
-        <h1 class="titre-section">Acteurs</h1>
-        <p class="description-section">Retrouvez des infos sur vos acteurs préférés</p>
+        <div class="infos-section">
+            <h1 class="titre-section">Acteurs</h1>
+            <p class="description-section">Retrouvez des infos sur vos acteurs préférés</p>
+        </div>
         <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
@@ -89,8 +97,10 @@
         </div>
     </section>
     <section class="realisateurs">
-        <h1 class="titre-section">Realisateurs</h1>
-        <p class="description-section">Retrouvez des infos sur vos réalisateurs préférés</p>
+        <div class="infos-section">
+            <h1 class="titre-section">Realisateurs</h1>
+            <p class="description-section">Retrouvez des infos sur vos réalisateurs préférés</p>
+        </div>
         <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
