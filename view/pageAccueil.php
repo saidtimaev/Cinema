@@ -1,23 +1,42 @@
 <?php ob_start(); ?>
 
-    <!-- <section class="presentation">
+    
+    <section class="presentation">
         <h1 class="titre-section"></h1>
         <p class="description-section">Découvrez notre recherche de films, acteurs, réalisateurs, rôles et plus encore...</p>
-        <div class="containerCarousel">
+        <div class="container-carousel">       
+            <button class="slide-arrow" id="slide-arrow-prev">
+                &#8249;
+            </button>
+            <button class="slide-arrow" id="slide-arrow-next">
+                &#8250;
+            </button>
+            <ul class="slides-container" id="slides-container">
+                <?php 
+                    foreach($requeteFilmsMieuxNotes2->fetchAll() as $film){ ?>
+                        <li class="slide">
+                            <div class="card-carousel">
+                                <figure class="image-affiche-film">
+                                    <img src="<?= $film["film_affiche"] ?>" alt=""></img>
+                                </figure>
+                                <div class="titre-date">
+                                    <p class="titre-film"><?= $film["film_titre"] ?> </p>
+                                    
+                                </div>
+                                <div class="duree-note">
+                                    <p class="duree-film">Durée : <?= $film["film_duree"] ?></p>
+                                    <p class="note-film">Note : <?= $film["film_note"] ?></p>
+                                </div>
+                            </div>
+                        </li>
+                <?php } ?>
+                
+           
+            </ul>
             
-               
-                    <div class="card">
-                        <figure class="image-affiche-film">
-                            <img src="<?= "https://fr.web.img6.acsta.net/medias/nmedia/00/02/38/57/affblade2.jpg" ?>" alt=""></img>
-                        </figure>
-                        <p class="titre-film"><?= "Blade 2" ?></p>
-                        <p class="date-sortie-film"><?= "1993" ?></p>
-                        <p class="duree-film"><?= "95" ?></p>
-                        <p class="note-film"><?= "5" ?></p>
-                    </div>
-          
+    
         </div>
-    </section> -->
+    </section>
     <section class="dernieres-sorties">
         <div class="infos-section">
             <h1 class="titre-section">Dernières sorties</h1>
@@ -31,7 +50,7 @@
                             <img src="<?= $film["film_affiche"] ?>" alt=""></img>
                         </figure>
                         <p class="titre-film"><?= $film["film_titre"] ?></p>
-                        <p class="date-sortie-film"><?= $film["film_date_sortie"] ?></p>
+                        <p class="date-sortie-film">Date de sortie : <?= $film["film_date_sortie"] ?></p>
                         <p class="note-film">Note : <?= $film["film_note"] ?></p>
                     </div>
             <?php } ?>
@@ -52,7 +71,7 @@
                             <img src="<?= $film["film_affiche"] ?>" alt=""></img>
                         </figure>
                         <p class="titre-film"><?= $film["film_titre"] ?></p>
-                        <p class="date-sortie-film"><?= $film["film_date_sortie"] ?></p>
+                        <p class="date-sortie-film">Date de sortie : <?= $film["film_date_sortie"] ?></p>
                         <p class="note-film"><?= $film["film_note"] ?></p>
                     </div>
             <?php } ?>

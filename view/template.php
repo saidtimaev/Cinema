@@ -12,11 +12,11 @@
         <body >
            
             <header>
-                <img>Logo</img>
                 
                 <div class="nav">
                     <nav>
-                        <div class="nav-list">
+                        <div id="mySidenav" class="sidenav">
+                            <a id="closeBtn" href="#" class="close">×</a>
                             <ul>
                                 <li><a href="index.php?action=pageAccueil">Accueil</a></li>
                                 <li><a href="index.php?action=listeFilms">Films</a></li>
@@ -27,13 +27,22 @@
                                 <li><a href="index.php?action=listeCastings">Castings</a></li>
                             </ul>
                         </div>
+                        <a href="#" id="openBtn">
+                            <span class="burger-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </a>
                     </nav>
                 </div>
                 
+                <p>Cinema</p>
                 <div class="recherche">
                     <form>
-                        <label>Recherche : </label>
-                        <input type="text" name=" " value="" placeholder="Tapez votre recherche ici..">
+                        <label></label>
+                        <input type="text" name="recherche" value="" placeholder="Recherche">
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </form>
                 </div>
             </header>
@@ -66,6 +75,7 @@
                     </div>
                 </footer>
             </div>
+        <script src="public/js/script.js"></script>
         </body>
     </div>
 </html>

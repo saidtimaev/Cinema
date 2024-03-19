@@ -27,6 +27,13 @@ class CinemaController{
             LIMIT 5
         ");
 
+        $requeteFilmsMieuxNotes2 = $pdo->query("
+            SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche
+            FROM film
+            ORDER BY film_note DESC
+            LIMIT 5
+        ");
+
         $requeteGenres = $pdo->query("
             SELECT genre_libelle, id_genre, genre_affiche
             FROM genre
