@@ -24,8 +24,8 @@
                                     
                                 </div>
                                 <div class="duree-note">
-                                    <p class="duree-film">Durée : <?= $film["film_duree"] ?></p>
-                                    <p class="note-film">Note : <?= $film["film_note"] ?></p>
+                                    <p class="duree-film"><span class="bold">Durée :</span> <?= $film["film_duree"] ?></p>
+                                    <p class="note-film"><span class="bold">Note :</span> <?= $film["film_note"] ?></p>
                                 </div>
                             </div>
                         </li>

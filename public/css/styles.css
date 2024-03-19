@@ -132,7 +132,11 @@ header p{
 }
 
 .duree-film{
-    margin-right: 15px;
+    margin-right: 30px;
+}
+
+.bold{
+    font-weight: bold;
 }
 
 .titre-date{
@@ -140,7 +144,7 @@ header p{
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 10px;
     height: 50px;
 
 }
@@ -149,9 +153,9 @@ header p{
     
     display: flex;
     width: 100%;
-    justify-content: space-around;
+    justify-content: left;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
 
 }
@@ -216,11 +220,12 @@ header p{
     height: 4rem;
     width: 4rem;
     background-color: var(--body-color);
+    opacity: 0.4;
     border: 2rem;
     font-size: 3rem;
     padding: 0;
     cursor: pointer;
-    color: var(--second-color);
+    color: var(--first-color);
     z-index: 100;
   }
   
