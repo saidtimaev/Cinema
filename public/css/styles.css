@@ -4,7 +4,10 @@
     --first-color: #211951;
     --first-color90: rgba(33, 25, 81, .9);
     --second-color: #836FFF; 
+    --accent-color: #5e3bff;
     --body-color: #F0F3FF;
+    --text-color: #050315;
+
     
     
   }
@@ -28,7 +31,7 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: 60px;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -76,9 +79,13 @@ header p{
   
   /* Sidenav menu links */
   .sidenav a {
-    padding: 8px 8px 8px 32px;
+    
+    padding-left: 13px;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 20px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 30px;
     color: var(--body-color);
     display: block;
     transition: 0.3s ease-in-out;
@@ -86,7 +93,7 @@ header p{
   
   .sidenav ul {
     list-style-type: none;
-    padding: 0;
+    padding: 15px 30px;
     margin: 0;
   }
   
@@ -99,7 +106,7 @@ header p{
   .sidenav .close {
     position: absolute;
     top: 0;
-    right: 25px;
+    left: 0;
     font-size: 50px;
   }
   
@@ -111,6 +118,15 @@ header p{
     background-color: var(--body-color);
     margin: 6px 0;
   }
+
+  .close{
+
+    padding-left: 13px;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
   
 
 /* SECTIONS */
@@ -129,6 +145,12 @@ header p{
 .titre-film{
     margin-top: 15px;
     margin-right: 5px;
+    text-align: center;
+}
+
+.text-align-left{
+
+    text-align: left;
 }
 
 .duree-film{
@@ -155,15 +177,19 @@ header p{
     width: 100%;
     justify-content: left;
     margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
 
+}
+
+.jaune{
+    color: rgb(255, 208, 0);
 }
 
 
 
 .presentation .description-section{
-    color: #836FFF;
+    color: var(--accent-color);
     height: 100px;
     display: flex;
     align-items: center;
@@ -171,9 +197,15 @@ header p{
     padding-left: 15px;
     padding-right: 15px;
     
+    
 }
 
 /* CAROUSEL */
+
+.card-carousel img{
+    border: 3px solid;
+
+}
 
 .container-carousel {
     
@@ -190,6 +222,7 @@ header p{
     overflow: scroll;
     scroll-behavior: smooth;
     background-color: var(--first-color);
+    
   }
   .slide {
     display: flex;
@@ -246,6 +279,8 @@ header p{
 .acteur,
 .realisateur{
     font-weight: bold;
+    margin-top: 20px;
+    font-size: 20px;
 }
 
 .dernieres-sorties,
@@ -256,9 +291,8 @@ header p{
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 50px;
 }
 
 .infos-section{
@@ -279,8 +313,29 @@ header p{
     align-items: center;
     margin-top: 20px;
     filter: drop-shadow(4px 6px 10px rgba(0,0,0, 0.57));
+    position: relative;
+    
 
+}
 
+.infos-hidden{
+    position: absolute;
+    color: white;
+    top: 15px;
+    left: 15px;
+    opacity: 0;
+    
+}
+
+.card:hover .infos-hidden{
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.card:hover img{
+    filter: brightness(0.5);
+    transition: all 0.3s ease-in-out;
 }
 
 .card-carousel{
@@ -302,31 +357,65 @@ header p{
     object-fit:cover;
     object-position: 50% 50%;
     height: 400px;
-    border: 3px solid;
     border-color: var(--second-color);
     border-radius : 15px ;
 }
 
 .titre-section{
-    color: var(--first-color);
+    color: var(--text-color);
 }
 
 .description-section{
-    color: var(--second-color);
+    color: var(--accent-color);
+    margin-top: 5px;
 }
 
 .card{
-    color: var(--second-color);
+    margin-top: 50px;
+    color: var(--text-color);
 }
 
 .titre-film{
     font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 5px;
 }
 
-.titre-film,
+
 .date-sortie-film{
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+/* BOUTONS */
+
+.bouton{
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+}
+
+/* B1 */
+
+.b1{
+    background-color: var(--first-color);
+    color: var(--body-color);
+    width: 140px;
+    height: 30px;
+    border:1px solid var(--first-color);
+    border-radius: 10px;
+    filter: drop-shadow(4px 4px 0px var(--second-color));
+    transition: 0.3s ease-in-out;
+    font-size: 17px;
+    margin-top: 15px;
+}
+
+.b1:hover{
+    background-color: var(--body-color);
+    color: var(--first-color);
+    filter: drop-shadow(4px 4px 0px var(--first-color));
+    transition: 0.3s ease-in-out;
 }
 
 /* FOOTER */

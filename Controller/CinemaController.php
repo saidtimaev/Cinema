@@ -13,16 +13,20 @@ class CinemaController{
         $pdo = Connect::seConnecter();
         // On appelle la méthode query() sur de l'objet de la classe PDO
         $requeteSortiesRecentes = $pdo->query("
-            SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche
+            SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche, CONCAT(personne_prenom,' ', personne_nom) as realisateur
             FROM film
+            INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+            INNER JOIN personne ON personne.id_personne = realisateur.id_personne
             ORDER BY DATE(film_date_sortie) DESC
             LIMIT 5
         ");
 
 
         $requeteFilmsMieuxNotes = $pdo->query("
-            SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%d/%m/%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche
+            SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche, CONCAT(personne_prenom,' ', personne_nom) as realisateur
             FROM film
+            INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+            INNER JOIN personne ON personne.id_personne = realisateur.id_personne
             ORDER BY film_note DESC
             LIMIT 5
         ");
@@ -30,15 +34,19 @@ class CinemaController{
         $requeteFilmsMieuxNotes2 = $pdo->query("
             SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche
             FROM film
-            ORDER BY film_note DESC
+            ORDER BY film_note 
             LIMIT 5
         ");
 
         $requeteGenres = $pdo->query("
-            SELECT genre_libelle, id_genre, genre_affiche
+            SELECT genre_libelle, genre.id_genre, genre_affiche, COUNT(id_film) as nombre_films
             FROM genre
+            INNER JOIN genre_film ON genre.id_genre = genre_film.id_genre
+            GROUP BY genre.id_genre
             LIMIT 5
         ");
+
+        
 
 
         $requeteActeurs = $pdo->query("

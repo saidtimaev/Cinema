@@ -1,5 +1,7 @@
 <?php ob_start(); ?>
 
+
+
     
     <section class="presentation">
         <h1 class="titre-section"></h1>
@@ -25,7 +27,15 @@
                                 </div>
                                 <div class="duree-note">
                                     <p class="duree-film"><span class="bold">Durée :</span> <?= $film["film_duree"] ?></p>
-                                    <p class="note-film"><span class="bold">Note :</span> <?= $film["film_note"] ?></p>
+                                    <p class="note-film">
+                                        <span class="bold">Note :</span> 
+                                        <?php for($i=0; $i<5; $i++){ 
+                                            if($i < $film["film_note"]){?>
+                                            <i class="fa-solid fa-star jaune"></i>
+                                        <?php } else { ?>
+                                            <i class="fa-solid fa-star"></i>
+                                        <?php }} ?>
+                                    </p>
                                 </div>
                             </div>
                         </li>
@@ -49,20 +59,33 @@
                         <figure class="image-affiche-film">
                             <img src="<?= $film["film_affiche"] ?>" alt=""></img>
                         </figure>
+                        <div class="infos-hidden">
+                            <p class="titre-film text-align-left"><?= $film["film_titre"] ?></p>
+                            <p class="realisateur-film"><span class="bold">Réalisateur :</span> <?= $film["realisateur"] ?></p>
+                            <p class="date-sortie-film"><span class="bold">Année :</span> <?= $film["film_date_sortie"] ?></p>
+                            <p class="note-film">
+                                <span class="bold">Note :</span> 
+                                <?php for($i=0; $i<5; $i++){ 
+                                    if($i < $film["film_note"]){?>
+                                    <i class="fa-solid fa-star jaune"></i>
+                                <?php } else { ?>
+                                    <i class="fa-solid fa-star"></i>
+                                <?php }} ?>
+                            </p>
+                        </div>
                         <p class="titre-film"><?= $film["film_titre"] ?></p>
-                        <p class="date-sortie-film">Date de sortie : <?= $film["film_date_sortie"] ?></p>
-                        <p class="note-film">Note : <?= $film["film_note"] ?></p>
                     </div>
             <?php } ?>
         </div>
-        <button class="b1">Afficher plus</button>
+        <div class="bouton">
+            <button class="b1">Afficher plus</button>                               
+        </div>
     </section>
     <section class="classement-film">
         <div class="infos-section">
             <h1 class="titre-section">Classement films</h1>
             <p class="description-section">Découvrez les films les mieux notés</p>
         </div>
-        <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
                 foreach($requeteFilmsMieuxNotes->fetchAll() as $film){ ?>
@@ -70,11 +93,26 @@
                         <figure class="image-affiche-film">
                             <img src="<?= $film["film_affiche"] ?>" alt=""></img>
                         </figure>
+                        <div class="infos-hidden">
+                            <p class="titre-film text-align-left"><?= $film["film_titre"] ?></p>
+                            <p class="realisateur-film"><span class="bold">Réalisateur :</span> <?= $film["realisateur"] ?></p>
+                            <p class="date-sortie-film"><span class="bold">Année :</span> <?= $film["film_date_sortie"] ?></p>
+                            <p class="note-film">
+                                <span class="bold">Note :</span> 
+                                <?php for($i=0; $i<5; $i++){ 
+                                    if($i < $film["film_note"]){?>
+                                    <i class="fa-solid fa-star jaune"></i>
+                                <?php } else { ?>
+                                    <i class="fa-solid fa-star"></i>
+                                <?php }} ?>
+                            </p>
+                        </div>
                         <p class="titre-film"><?= $film["film_titre"] ?></p>
-                        <p class="date-sortie-film">Date de sortie : <?= $film["film_date_sortie"] ?></p>
-                        <p class="note-film"><?= $film["film_note"] ?></p>
                     </div>
             <?php } ?>
+        </div>
+        <div class="bouton">
+            <button class="b1">Afficher plus</button>                               
         </div>
     </section>
     <section class="genres">
@@ -82,7 +120,6 @@
             <h1 class="titre-section">Genres</h1>
             <p class="description-section">Retrouvez les films par genre</p>
         </div>
-        <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
                 foreach($requeteGenres->fetchAll() as $genre){ ?>
@@ -90,10 +127,16 @@
                         <figure class="image-affiche-genre">
                             <img src="<?= $genre["genre_affiche"] ?>" alt=""></img>
                         </figure>
+                        <div class="infos-hidden">
+                            <p class="nombre-films-genre"><span class="bold">Films :</span> <?= $genre["nombre_films"] ?></p>
+                        </div>
                         <p class="genre-libelle"><?= $genre["genre_libelle"] ?></p>
                         
                     </div>
             <?php } ?>
+        </div>
+        <div class="bouton">
+            <button class="b1">Afficher plus</button>                               
         </div>
     </section>
     <section class="acteurs">
