@@ -17,11 +17,13 @@
     padding: 0;
     vertical-align: top;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Roboto;
 }
 
 #wrapper{
     background-color: var(--body-color);
+    margin-top: 60px;
+    
 }
 /* HEADER */
 
@@ -34,6 +36,11 @@ header{
     height: 60px;
     padding-left: 10px;
     padding-right: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
 }
 
 header p{
@@ -220,6 +227,8 @@ header p{
     margin: 0;
     padding: 0;
     overflow: scroll;
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
     scroll-behavior: smooth;
     background-color: var(--first-color);
     
@@ -292,7 +301,7 @@ header p{
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 100px;
 }
 
 .infos-section{
@@ -418,8 +427,15 @@ header p{
     transition: 0.3s ease-in-out;
 }
 
+.b1 a:visited{
+    color: var(--body-color);
+}
+
 /* FOOTER */
 
+footer{
+    margin-top: 50px;
+}
 /* FOOTER NAV */
 
 .footer-nav{
@@ -441,6 +457,75 @@ header p{
 .reseaux li{
     display: inline;
 }
+
+/* LISTES */
+
+.table-films table,th,td{
+    border: 1px solid var(--first-color);
+    border-collapse: collapse;
+}
+
+.table-films table{
+    width: 90%;
+}
+
+.table-films{
+    display: flex;
+    justify-content: center;
+}
+
+.liste-films a:link{
+    color: var(--text-color);
+    text-decoration: none;
+
+}
+
+.liste-films table a:visited{
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.table-films thead th:nth-child(1) {
+    width: 50%;
+}
+  
+.table-films thead th:nth-child(2) {
+width: 30%;
+}
+
+.table-films thead th:nth-child(3) {
+width: 15%;
+}
+
+.table-films thead th:nth-child(4) {
+width: 5%;
+}
+
+.table-films th,
+td {
+  padding: 5px;
+}
+
+.table-films tbody td{
+vertical-align: middle;
+text-align: center;
+}
+
+.table-films thead th{
+    background-color: var(--first-color);
+    color: var(--body-color);
+    
+}
+
+tbody tr:nth-child(odd) {
+    background-color: var(--second-color);
+    color: var(--text-color);
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: var(--body-color);
+    color: var(--text-color)
+  }
 
 
 @media only screen and (min-width: 412px) {

@@ -144,7 +144,6 @@
             <h1 class="titre-section">Acteurs</h1>
             <p class="description-section">Retrouvez des infos sur vos acteurs préférés</p>
         </div>
-        <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
                 foreach($requeteActeurs->fetchAll() as $acteur){ ?>
@@ -152,10 +151,16 @@
                         <figure class="image-acteur">
                             <img src="<?= $acteur["personne_photo"] ?>" alt=""></img>
                         </figure>
+                        <div class="infos-hidden">
+                            <p class="nombre-roles-acteur"><span class="bold">Nombre de rôles joués :</span> <?= $acteur["nombre_roles"] ?></p>
+                        </div>
                         <p class="acteur"><?= $acteur["personne_prenom"]. " ".$acteur["personne_nom"]  ?></p>
                         
                     </div>
             <?php } ?>
+        </div>
+        <div class="bouton">
+            <button class="b1">Afficher plus</button>                               
         </div>
     </section>
     <section class="realisateurs">
@@ -163,7 +168,6 @@
             <h1 class="titre-section">Realisateurs</h1>
             <p class="description-section">Retrouvez des infos sur vos réalisateurs préférés</p>
         </div>
-        <button class="b1">Afficher plus</button>
         <div class="containerCards">
             <?php 
                 foreach($requeteRealisateurs->fetchAll() as $realisateur){ ?>
@@ -171,10 +175,16 @@
                         <figure class="image-realisateur">
                             <img src="<?= $realisateur["personne_photo"] ?>" alt=""></img>
                         </figure>
+                        <div class="infos-hidden">
+                            <p class="nombre-films-realisateur"><span class="bold">Nombre de films réalisés :</span> <?= $realisateur["nombre_films_realisateur"] ?></p>
+                        </div>
                         <p class="realisateur"><?= $realisateur["personne_prenom"]. " ".$realisateur["personne_nom"]  ?></p>
                         
                     </div>
             <?php } ?>
+        </div>
+        <div class="bouton">
+            <button class="b1">Afficher plus</button>                               
         </div>
     </section>
 
