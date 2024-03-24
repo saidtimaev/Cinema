@@ -1,5 +1,6 @@
 <?php
 
+// On utilise différentes classes du namespace Controller
 use Controller\CinemaController;
 use Controller\FilmController;
 use Controller\ActeurController;
@@ -8,6 +9,7 @@ use Controller\PersonneController;
 use Controller\GenreController;
 use Controller\RoleController;
 use Controller\CastingController;
+
 
 spl_autoload_register(function ($class_name){
     require str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . '.php';
