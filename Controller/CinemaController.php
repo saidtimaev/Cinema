@@ -7,10 +7,12 @@ use Model\Connect;
 class CinemaController{
     
 
+    //Affiche la page d'accueil
     public function pageAccueil() {
 
         // On appelle la méthode statique seConnecter de la classe Connect qui instancie un objet PDO stocké dans $pdo
         $pdo = Connect::seConnecter();
+
         // On appelle la méthode query() sur de l'objet de la classe PDO
         $requeteSortiesRecentes = $pdo->query("
             SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche, CONCAT(personne_prenom,' ', personne_nom) as realisateur
@@ -20,7 +22,6 @@ class CinemaController{
             ORDER BY DATE(film_date_sortie) DESC
             LIMIT 5
         ");
-
 
         $requeteFilmsMieuxNotes = $pdo->query("
             SELECT id_film, film_titre, DATE_FORMAT(film_date_sortie, '%Y') as film_date_sortie, TIME_FORMAT(SEC_TO_TIME(film_duree*60), '%H:%i') as film_duree, film_note, film_affiche, CONCAT(personne_prenom,' ', personne_nom) as realisateur
@@ -46,9 +47,6 @@ class CinemaController{
             LIMIT 5
         ");
 
-        
-
-
         $requeteActeurs = $pdo->query("
             SELECT acteur.id_acteur,personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe, personne_photo, COUNT(acteur.id_acteur) as nombre_roles
             FROM acteur
@@ -70,12 +68,6 @@ class CinemaController{
         require "view/pageAccueil.php";    
         
     }   
-    
-    
-
-    
-
-    
 }
 
 

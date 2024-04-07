@@ -10,11 +10,13 @@ use Controller\GenreController;
 use Controller\RoleController;
 use Controller\CastingController;
 
-
+// Charge automatiquement les classes  lorsque nécessaire
 spl_autoload_register(function ($class_name){
+    // Remplace les backslashes (\) dans le chemin de la classe par le séparateur de répertoire approprié pour le système d'exploitation en cours
     require str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . '.php';
 });
 
+//On instancie les différents controlleurs
 $ctrlCinema = new CinemaController();
 $ctrlFilm = new FilmController();
 $ctrlActeur = new ActeurController();
@@ -24,18 +26,17 @@ $ctrlGenre = new GenreController();
 $ctrlRole = new RoleController();
 $ctrlCasting = new CastingController();
 
+// On filtre les données recues par la méthode GET
 $id = (isset($_GET['id'])) ? filter_var($_GET['id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 $idFilm = (isset($_GET['id_film'])) ? filter_var($_GET['id_film'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 $idRole = (isset($_GET['id_role'])) ? filter_var($_GET['id_role'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 $idActeur = (isset($_GET['id_acteur'])) ? filter_var($_GET['id_acteur'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 
 
-
+// Si une action a été recue
 if(isset($_GET["action"])){
 
-    
-
-
+    //Switch qui définir selon l'action recue quelle méthode de quel controlleur appeler
     switch ($_GET["action"]){
         // LISTES
 

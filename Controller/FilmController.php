@@ -9,6 +9,7 @@ class FilmController {
     private $pdo;
 
     public function __construct() {
+        // A l'instanciation de l'objet attribue à la propriété $pdo un objet de la classe PDO
         $this->pdo = Connect::seConnecter();
     }
 
@@ -70,6 +71,7 @@ class FilmController {
         require "view/infos/infosFilm.php";
     }
 
+    // Afficher la page d'ajout de film
     public function ajoutFilmAffichage(){
         $pdo = Connect::seConnecter();
     
@@ -89,6 +91,7 @@ class FilmController {
         require "view/ajouts/ajoutFilm.php";
     }
 
+    // Ajouter un film
     public function ajoutFilm(){
 
         if(isset($_POST['submit'])){
@@ -139,11 +142,6 @@ class FilmController {
                 ORDER BY personne_nom
             ");
 
-      
-            
-          
-            
-
             foreach($filmGenres as $filmGenre){
                 
                 $requeteAjoutGenreFilm = $pdo->prepare("
@@ -154,16 +152,12 @@ class FilmController {
                     "id_film"=>$idFilm,
                     "id_genre"=>$filmGenre
                 ]);
-
-            }
-          
-            
-            
+            }        
         }
-
         require "view/ajouts/ajoutFilm.php";
     }
 
+    // Afficher la page de modification d'un film
     public function modificationFilmAffichage($id){
 
         $pdo = Connect::seConnecter();
@@ -231,12 +225,11 @@ class FilmController {
         ");
 
         $requeteActeursRoles->execute(["id"=>$id]);
-        
-
+    
         require "view/modifications/modificationFilm.php";
-
     }
 
+    // Modifier un film
     public function modificationFilm($id){
 
         if(isset($_POST['submit'])){
@@ -281,10 +274,7 @@ class FilmController {
                 FROM genre
                 ORDER BY genre_libelle
             ");
-    
-            
 
-      
             $requeteSuppressionGenresFilm = $pdo->prepare("
                 DELETE FROM genre_film
                 WHERE id_film = :id_film
@@ -293,9 +283,6 @@ class FilmController {
             $requeteSuppressionGenresFilm->execute([
                 "id_film"=>$id
             ]);
-            
-          
-            
 
             foreach($filmGenres as $filmGenre){
                 
@@ -307,19 +294,15 @@ class FilmController {
                     "id_film"=>$id,
                     "id_genre"=>$filmGenre
                 ]);
-
             }
-          
         }
 
-
-        
         // require "view/modifications/modificationFilm.php";
         header("Location:index.php?action=modificationFilmAffichage&id=$id");die;
 
     }
 
-    
+    //Supprimer un film
     public function supprimerFilm($id){
         
         $pdo = Connect::seConnecter();

@@ -22,6 +22,7 @@ class CastingController {
         require "view/listes/listeCastings.php";
     }
 
+    // Afficher page d'ajout d'un casting
     public function ajoutCastingAffichage(){
 
         // On appelle la méthode statique seConnecter de la classe Connect qui instancie un objet PDO stocké dans $pdo
@@ -52,6 +53,7 @@ class CastingController {
 
     }
 
+    // Ajouter un casting
     public function ajoutCasting(){
         // var_dump($_POST);die;
         if(isset($_POST['submit'])){
@@ -98,6 +100,7 @@ class CastingController {
         require "view/ajouts/ajoutCasting.php";
     }
 
+    //Supprimer un casting
     public function supprimerCasting($idFilm, $idRole, $idActeur){
         // var_dump($_GET);die;
         $pdo = Connect::seConnecter();

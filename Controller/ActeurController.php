@@ -10,6 +10,7 @@ class ActeurController {
     public function listeActeurs(){
 
         $pdo = Connect::seConnecter();
+        
         $requete = $pdo->query("
             SELECT id_acteur,personne_nom, personne_prenom, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance ,personne_sexe
             FROM acteur
@@ -23,7 +24,6 @@ class ActeurController {
     public function infosActeur($id){
 
         $pdo = Connect::seConnecter();
-
 
         $requeteInfosActeur = $pdo->prepare("
         SELECT personne_prenom, personne_nom, personne_sexe, DATE_FORMAT(personne_date_naissance, '%d/%m/%Y') as personne_date_naissance
@@ -51,6 +51,7 @@ class ActeurController {
         require "view/infos/infosActeur.php";
     }
 
+    //Afficher la page de modification des infos d'un acteur
     public function modificationActeurAffichage($id){
 
         $pdo = Connect::seConnecter();
@@ -84,6 +85,7 @@ class ActeurController {
         require "view/modifications/modificationActeur.php";
     }
 
+    // Supprimer un acteur 
     public function supprimerActeur($id){
 
         $pdo = Connect::seConnecter();
@@ -103,9 +105,9 @@ class ActeurController {
     }
 
 
+    // Modifier les infos d'un acteur
     public function modificationActeur($id){
         
-
         if(isset($_POST['submit'])){
 
         // On crée nos variables qui vont récupérer les valeurs qu'on a saisies qui seront filtrées
@@ -119,8 +121,6 @@ class ActeurController {
 
         // var_dump($_POST);
 
-        
-            
             $requeteModificationPersonne = $pdo->prepare("
                 UPDATE personne 
                 SET personne_prenom = :personne_prenom, personne_nom = :personne_nom, personne_sexe =:personne_sexe, personne_date_naissance = :personne_date_naissance, personne_photo = :personne_photo
@@ -137,8 +137,6 @@ class ActeurController {
             ]);
 
             
-        
-
         // Si la personne est un acteur et un réalisateur
         if ($_POST["professions"] == "both"){
 
@@ -180,6 +178,7 @@ class ActeurController {
 
         } 
         
+        // Si la personne est un acteur
         if ($_POST["professions"] == "acteur"){
 
             $requeteSuppressionRoleActeur = $pdo->prepare("
@@ -211,6 +210,7 @@ class ActeurController {
 
         } 
         
+        // Si la personne est un réalisateur
         if ($_POST["professions"] == "realisateur") {
 
             $requeteSuppressionRoleActeur = $pdo->prepare("
